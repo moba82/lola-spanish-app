@@ -1,25 +1,121 @@
-<script>
-async function processSpeech(text) {
-    addMessage(text, 'user');
-    try {
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ message: text, lang: currentLang })
-        });
-        
-        const data = await res.json();
-        
-        if (data.error) {
-            // MOSTRA L'ERRORE REALE NELLA CHAT PER DIAGNOSTICA
-            addMessage("❌ Errore Tecnico: " + data.error, 'bot');
-            return;
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lily & Lola Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --mint: #bbf7d0; --pink: #f472b6; --pink-dark: #db2777; --bg: #fdf2f8; }
+        body { background: var(--bg); font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
+        .screen { display: none; width: 100%; max-width: 450px; text-align: center; animation: fadeIn 0.5s; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card { background: white; border-radius: 30px; padding: 25px; border: 4px solid var(--mint); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .avatar { width: 100px; height: 100px; background: var(--pink); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 4px solid white; box-shadow: 0 5px 15px rgba(244,114,182,0.3); transition: 0.3s; }
+        .talking { transform: scale(1.1); box-shadow: 0 0 20px var(--pink); }
+        h1 { color: var(--pink-dark); font-weight: 900; }
+        .btn { background: var(--mint); color: #065f46; border: none; padding: 15px; border-radius: 50px; font-weight: 800; cursor: pointer; width: 100%; margin: 10px 0; font-size: 16px; box-shadow: 0 4px 0 #86efac; transition: 0.2s; }
+        .btn:active { transform: translateY(3px); box-shadow: none; }
+        .btn-pink { background: var(--pink); color: white; box-shadow: 0 4px 0 var(--pink-dark); }
+        #chat-box { height: 300px; overflow-y: auto; background: white; border: 2px solid var(--pink); border-radius: 20px; padding: 15px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+        .msg { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-weight: 600; font-size: 15px; }
+        .msg.bot { align-self: flex-start; background: var(--pink); color: white; }
+        .msg.user { align-self: flex-end; background: var(--mint); color: #065f46; }
+    </style>
+</head>
+<body>
+
+    <div id="screen-home" class="screen active">
+        <div class="card">
+            <div class="avatar">🌸</div>
+            <h1>Lily & Lola</h1>
+            <p>Scegli la lingua per iniziare:</p>
+            <button class="btn" onclick="startApp('en')">🇬🇧 English with Lily</button>
+            <button class="btn btn-pink" onclick="startApp('es')">🇪🇸 Español con Lola</button>
+        </div>
+    </div>
+
+    <div id="screen-chat" class="screen">
+        <div class="card">
+            <div id="chat-avatar" class="avatar">🌸</div>
+            <div id="chat-box"></div>
+            <button class="btn btn-pink" id="mic-btn" onclick="toggleListening()">🎤 Tocca e Parla</button>
+            <button class="btn" onclick="location.reload()" style="background:#eee; box-shadow:none; color:gray;">Indietro</button>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'en';
+        const synth = window.speechSynthesis;
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
-        
-        speak(data.reply);
-    } catch(e) {
-        addMessage("❌ Errore di connessione. Verifica di aver fatto il Redeploy su Vercel.", 'bot');
-    }
-}
-// ... (resto del codice dei quiz) ...
-</script>
+
+        function startApp(l) {
+            currentLang = l;
+            document.getElementById('chat-avatar').innerText = (l === 'en' ? "🌸" : "💃");
+            showScreen('screen-chat');
+            speak(l === 'en' ? "Hi Zoe! I'm Lily. How are you?" : "¡Hola Zoe! Soy Lola. ¿Cómo estás?");
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = (currentLang === 'en' ? 'en-US' : 'es-ES');
+            utterance.onstart = () => document.getElementById('chat-avatar').classList.add('talking');
+            utterance.onend = () => document.getElementById('chat-avatar').classList.remove('talking');
+            synth.speak(utterance);
+            addMessage(text, 'bot');
+        }
+
+        function addMessage(text, side) {
+            const box = document.getElementById('chat-box');
+            const div = document.createElement('div');
+            div.className = `msg ${side}`;
+            div.innerText = text;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        async function toggleListening() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return alert("Browser non supportato");
+            
+            const recognition = new SpeechRecognition();
+            recognition.lang = (currentLang === 'en' ? 'en-US' : 'es-ES');
+            
+            recognition.onstart = () => {
+                document.getElementById('mic-btn').innerText = "👂 Ti ascolto...";
+                document.getElementById('mic-btn').style.background = "#ff4d4d";
+            };
+
+            recognition.onresult = async (event) => {
+                const userText = event.results[0][0].transcript;
+                addMessage(userText, 'user');
+                
+                try {
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: userText, lang: currentLang })
+                    });
+                    const data = await response.json();
+                    if (data.reply) speak(data.reply);
+                    else speak("I have a technical problem, check my credits.");
+                } catch (err) {
+                    speak("Connection error.");
+                }
+            };
+
+            recognition.onend = () => {
+                document.getElementById('mic-btn').innerText = "🎤 Tocca e Parla";
+                document.getElementById('mic-btn').style.background = "var(--pink)";
+            };
+
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
