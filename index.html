@@ -3,112 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lola Academy - Aprende Español</title>
+    <title>Lola Academy - Personalizada para Zoe</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --orange: #fb923c; --orange-dark: #f97316; --pink: #f472b6; --pink-dark: #db2777; --bg: #fff7ed; }
         * { box-sizing: border-box; font-family: 'Nunito', sans-serif; }
-        body { background: var(--bg); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; color: #431407; }
+        body { background: var(--bg); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
         .screen { display: none; width: 100%; max-width: 480px; animation: fadeIn 0.4s; }
         .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
 
-        .card { background: white; border-radius: 30px; padding: 20px; box-shadow: 0 10px 25px rgba(251, 146, 60, 0.15); border: 4px solid var(--orange); text-align: center; margin-bottom: 20px; }
+        .card { background: white; border-radius: 30px; padding: 25px; box-shadow: 0 10px 25px rgba(251,146,60,0.15); border: 4px solid var(--orange); text-align: center; margin-bottom: 20px; }
         
-        .avatar-container { width: 120px; height: 120px; margin: 0 auto 10px; }
-        .avatar { width: 100%; height: 100%; background: var(--pink); border-radius: 50%; border: 4px solid white; display: flex; align-items: center; justify-content: center; font-size: 55px; box-shadow: 0 5px 15px var(--pink); }
+        .avatar { width: 100px; height: 100px; background: var(--pink); border-radius: 50%; border: 4px solid white; display: flex; align-items: center; justify-content: center; font-size: 50px; margin: 0 auto 15px; box-shadow: 0 5px 15px var(--pink); transition: 0.3s; }
         .talking { animation: pulse 0.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        h1 { color: var(--orange-dark); font-weight: 900; font-size: 28px; margin: 5px 0; }
-        .btn { background: var(--orange); color: white; border: none; padding: 15px; border-radius: 50px; font-weight: 800; cursor: pointer; width: 100%; margin: 8px 0; font-size: 16px; box-shadow: 0 4px 0 var(--orange-dark); transition: 0.2s; }
+        .btn { background: var(--orange); color: white; border: none; padding: 16px; border-radius: 50px; font-weight: 800; cursor: pointer; width: 100%; margin: 8px 0; font-size: 16px; box-shadow: 0 4px 0 var(--orange-dark); transition: 0.2s; }
         .btn-pink { background: var(--pink); box-shadow: 0 4px 0 var(--pink-dark); }
         .btn:active { transform: translateY(3px); box-shadow: none; }
 
-        #chat-box { height: 320px; overflow-y: auto; background: #fffcf9; border: 2px solid var(--pink); border-radius: 20px; padding: 15px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+        #chat-box { height: 350px; overflow-y: auto; background: #fffcf9; border: 2px solid var(--pink); border-radius: 20px; padding: 15px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
         .msg { padding: 10px 15px; border-radius: 18px; max-width: 85%; font-weight: 600; font-size: 15px; line-height: 1.4; }
-        .msg.bot { align-self: flex-start; background: var(--pink); color: white; border-bottom-left-radius: 2px; }
-        .msg.user { align-self: flex-end; background: var(--orange); color: white; border-bottom-right-radius: 2px; }
+        .msg.bot { align-self: flex-start; background: var(--pink); color: white; }
+        .msg.user { align-self: flex-end; background: var(--orange); color: white; }
 
-        .quiz-input { width: 100%; padding: 12px; border-radius: 15px; border: 2px solid var(--orange); font-size: 17px; text-align: center; margin: 10px 0; outline: none; }
-        .option-btn { background: #fff5f0; border: 2px solid var(--orange); padding: 12px; border-radius: 20px; margin: 6px 0; width: 100%; cursor: pointer; font-weight: 700; color: #431407; text-align: left; }
-        .option-btn:hover { background: var(--orange); color: white; }
-        
-        .story-text { background: #fffcf0; padding: 15px; border-radius: 20px; border: 1px dashed var(--orange); margin-bottom: 15px; font-size: 15px; line-height: 1.6; text-align: left; color: #5d4037; }
+        .story-box { background: #fff5f7; padding: 20px; border-radius: 20px; text-align: left; border: 2px dashed var(--pink); margin-bottom: 15px; color: #431407; }
+        .opt-btn { background: white; border: 2px solid var(--orange); padding: 12px; border-radius: 15px; margin: 5px 0; width: 100%; cursor: pointer; font-weight: 700; text-align: left; transition: 0.2s; }
+        .opt-btn:hover { background: #fff7ed; }
     </style>
 </head>
 <body>
 
     <div id="screen-home" class="screen active">
         <div class="card">
-            <div class="avatar-container"><div class="avatar">💃</div></div>
-            <h1>¡Hola Zoe!</h1>
-            <p>Soy Lola, ¿qué hacemos hoy?</p>
-            <button class="btn" onclick="showScreen('screen-prechat')">🎤 Chat con Voz (IA)</button>
-            <button class="btn btn-pink" onclick="showScreen('screen-exercises')">📚 Esercizi e Quiz</button>
+            <div class="avatar">💃</div>
+            <h1 style="color:var(--orange-dark); margin:0;">Lola Academy</h1>
+            <p>¡Hola Zoe! ¿Qué aventura prefieres hoy?</p>
+            <button class="btn" onclick="showScreen('screen-prechat')">🎤 Hablar con Voz</button>
+            <button class="btn btn-pink" onclick="showScreen('screen-exercises')">📖 Leer Historias IA</button>
+            <button class="btn" onclick="showScreen('screen-housework')" style="background:#ddd; box-shadow:none; color:#666;">🎯 Housework Quiz</button>
         </div>
     </div>
 
     <div id="screen-prechat" class="screen">
         <div class="card">
-            <h2>Scegli un argomento:</h2>
-            <button class="btn" onclick="startChat('mis cantantes favoritos y la música')">🎶 Musica e Cantanti</button>
-            <button class="btn" onclick="startChat('secretos y cotilleos de la escuela')">🏫 Segreti a Scuola</button>
-            <button class="btn" onclick="startChat('moda, compras y ropa')">👗 Moda e Shopping</button>
-            <button class="btn btn-pink" onclick="showScreen('screen-home')">Torna Indietro</button>
+            <h2>¿De qué hablamos?</h2>
+            <button class="btn" onclick="startChat('mis caballos y equitación')">🐎 Cavalli ed Equitazione</button>
+            <button class="btn" onclick="startChat('mi clarinete y la música')">🎶 Clarinetto e Musica</button>
+            <button class="btn" onclick="startChat('mis aventuras scout')">⚜️ Scout</button>
+            <button class="btn btn-pink" onclick="showScreen('screen-home')">Indietro</button>
         </div>
     </div>
 
     <div id="screen-chat" class="screen">
-        <div class="card">
+        <div class="card" style="padding:15px;">
             <div id="chat-box"></div>
-            <button class="btn btn-pink" onclick="toggleListening()" id="mic-btn">🎤 Parla con Lola</button>
-            <button class="btn" onclick="showScreen('screen-home')" style="background:#ccc; box-shadow:none;">Chiudi</button>
+            <button class="btn btn-pink" onclick="toggleListening()" id="mic-btn">🎤 Hablar</button>
+            <button class="btn" onclick="showScreen('screen-home')" style="background:#eee; box-shadow:none; color:gray;">Cerrar</button>
         </div>
     </div>
 
     <div id="screen-exercises" class="screen">
         <div class="card">
-            <h2>Esercizi A2</h2>
-            <button class="btn" onclick="startHousework()">🎯 Housework (Scrittura)</button>
-            <button class="btn btn-pink" onclick="startGrammar()">📝 Quiz Grammatica</button>
-            <button class="btn" onclick="startReading()">📖 Lettura e Comprensione</button>
-            <button class="btn btn-pink" onclick="showScreen('screen-home')">Indietro</button>
-        </div>
-    </div>
-
-    <div id="screen-quiz" class="screen">
-        <div class="card">
-            <h2 id="quiz-title">Quiz</h2>
-            <div id="quiz-content"></div>
+            <h2 id="reading-title">Lectura con Lola</h2>
+            <div id="reading-content">
+                <p>Lola sta scrivendo una storia su di te... ✍️</p>
+            </div>
+            <button id="next-story-btn" class="btn btn-pink" onclick="generateAIStory()" style="display:none;">Próxima historia</button>
+            <button class="btn" onclick="showScreen('screen-home')" style="background:#eee; box-shadow:none; color:gray;">Volver</button>
         </div>
     </div>
 
     <script>
         let currentTopic = '';
-        let score = 0;
-        let currentQ = 0;
+        let currentAns = -1;
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            if(id === 'screen-exercises') generateAIStory();
         }
 
-        // --- VOCE FEMMINILE DI RAGAZZA ---
+        // --- VOCE DI LOLA (Pitch 1.1) ---
         function speak(text) {
+            window.speechSynthesis.cancel();
             const msg = new SpeechSynthesisUtterance(text);
             msg.lang = 'es-ES';
-            const voices = window.speechSynthesis.getVoices();
-            // Cerca una voce femminile spagnola (Monica o Google sono solitamente più giovani)
-            const girlVoice = voices.find(v => v.lang.includes('es') && (v.name.includes('Monica') || v.name.includes('Google') || v.name.includes('Lucia')));
-            if(girlVoice) { msg.voice = girlVoice; msg.pitch = 1.2; } // Alziamo un po' il tono per sembrare più giovane
+            msg.pitch = 1.1; 
+            msg.rate = 0.95; // Leggermente più lenta per chiarezza A2
             
-            const avatar = document.querySelector('.avatar');
-            msg.onstart = () => avatar.classList.add('talking');
-            msg.onend = () => avatar.classList.remove('talking');
+            const voices = window.speechSynthesis.getVoices();
+            const girlVoice = voices.find(v => v.lang.includes('es') && (v.name.includes('Lucia') || v.name.includes('Google') || v.name.includes('Monica')));
+            if(girlVoice) msg.voice = girlVoice;
+
+            const avatars = document.querySelectorAll('.avatar');
+            msg.onstart = () => avatars.forEach(a => a.classList.add('talking'));
+            msg.onend = () => avatars.forEach(a => a.classList.remove('talking'));
+            
             window.speechSynthesis.speak(msg);
-            addMessage(text, 'bot');
+            if(document.getElementById('screen-chat').classList.contains('active')) addMessage(text, 'bot');
         }
 
         // --- CHAT IA ---
@@ -116,136 +111,77 @@
             currentTopic = topic;
             showScreen('screen-chat');
             document.getElementById('chat-box').innerHTML = '';
-            speak(`¡Hola Zoe! Me encanta hablar de ${topic}. ¿Qué me cuentas de nuevo?`);
+            speak(`¡Qué guay! Hablemos de ${topic}. ¿Cuál es tu parte favorita?`);
         }
 
         async function handleBotResponse(userText) {
             try {
-                const response = await fetch('/api/chat', {
+                const res = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userText, topic: currentTopic })
+                    body: JSON.stringify({ message: userText, topic: currentTopic, type: 'chat' })
                 });
-                const data = await response.json();
+                const data = await res.json();
                 speak(data.reply);
-            } catch (e) { speak("Lo siento Zoe, tengo un problema con mi conexión."); }
+            } catch (e) { speak("Perdona Zoe, mi magia no funciona ahora."); }
         }
 
         function toggleListening() {
             const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             rec.lang = 'es-ES';
-            rec.onstart = () => document.getElementById('mic-btn').innerText = "🔴 Ti ascolto...";
+            rec.onstart = () => document.getElementById('mic-btn').innerText = "🔴 Escuchando...";
             rec.onresult = (e) => {
-                const text = e.results[0][0].transcript;
-                addMessage(text, 'user');
-                handleBotResponse(text);
+                const t = e.results[0][0].transcript;
+                addMessage(t, 'user');
+                handleBotResponse(t);
             };
-            rec.onend = () => document.getElementById('mic-btn').innerText = "🎤 Parla con Lola";
+            rec.onend = () => document.getElementById('mic-btn').innerText = "🎤 Hablar";
             rec.start();
         }
 
         function addMessage(t, s) {
             const b = document.getElementById('chat-box');
-            b.innerHTML += `<div class="msg ${s}">${t}</div>`;
+            const d = document.createElement('div');
+            d.className = `msg ${s}`;
+            d.innerText = t;
+            b.appendChild(d);
             b.scrollTop = b.scrollHeight;
         }
 
-        // --- COMPRENSIONE TESTO (STORIE 2 MEDIA) ---
-        const stories = [
-            {
-                title: "Un concierto inolvidable",
-                text: "Zoe tiene una entrada para el concierto de Rosalía. Va con su mejor amiga. Están muy emocionadas porque Rosalía es su cantante favorita. ¡Van a bailar toda la noche!",
-                q: "¿Con quién va Zoe al concierto?",
-                opts: ["Con su madre", "Con su mejor amiga", "Sola"],
-                correct: 1
-            },
-            {
-                title: "El secreto de la escuela",
-                text: "En el pasillo del colegio, Lola encuentra una nota misteriosa en su taquilla. La nota dice: 'Tengo un secreto para ti, búscame en la biblioteca'. Lola tiene mucha curiosidad.",
-                q: "¿Dónde tiene que ir Lola para descubrir el secreto?",
-                opts: ["Al gimnasio", "A la cafetería", "A la biblioteca"],
-                correct: 2
+        // --- READING DINAMICO CON IA ---
+        async function generateAIStory() {
+            document.getElementById('next-story-btn').style.display = 'none';
+            document.getElementById('reading-content').innerHTML = '<p>✍️ Lola sta inventando una storia per te...</p>';
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'reading' })
+                });
+                const data = await res.json();
+                renderStory(data);
+            } catch (e) {
+                document.getElementById('reading-content').innerHTML = '<p>⚠️ Errore. Controlla il credito Anthropic.</p>';
             }
-        ];
-
-        function startReading() {
-            currentQ = 0;
-            showScreen('screen-quiz');
-            loadStory();
         }
 
-        function loadStory() {
-            const s = stories[currentQ];
-            let html = `<h3>${s.title}</h3><div class="story-text">${s.text}</div><p><b>${s.q}</b></p>`;
-            s.opts.forEach((o, i) => {
-                html += `<button class="option-btn" onclick="checkReading(${i})">${o}</button>`;
+        function renderStory(data) {
+            currentAns = data.answerIndex;
+            let html = `<div class="story-box">${data.story}</div><p style="font-weight:800;">${data.question}</p>`;
+            data.options.forEach((o, i) => {
+                html += `<button class="opt-btn" onclick="checkReading(${i})">${o}</button>`;
             });
-            document.getElementById('quiz-content').innerHTML = html;
+            document.getElementById('reading-content').innerHTML = html;
+            speak(data.story);
         }
 
         function checkReading(i) {
-            if(i === stories[currentQ].correct) {
-                alert("¡Muy bien! 🌟");
-                currentQ++;
-                if(currentQ < stories.length) loadStory();
-                else showScreen('screen-home');
+            if(i === currentAns) {
+                alert("¡Genial! 🌟 ¡Has entendido todo!");
+                document.getElementById('next-story-btn').style.display = 'block';
             } else {
-                alert("¡Casi! Intenta leer otra vez. ❌");
+                alert("¡Casi! Prueba otra vez. ❌");
             }
-        }
-
-        // --- GRAMMATICA ---
-        const grammarQ = [
-            { q: "Traduzione: 'Io vado' (Presente)", a: "yo voy" },
-            { q: "Plurale di 'la chica'", a: "las chicas" }
-        ];
-
-        function startGrammar() {
-            currentQ = 0; score = 0;
-            showScreen('screen-quiz');
-            loadGrammar();
-        }
-
-        function loadGrammar() {
-            if(currentQ < grammarQ.length) {
-                document.getElementById('quiz-content').innerHTML = `
-                    <h3>Quiz Grammatica</h3>
-                    <p>${grammarQ[currentQ].q}</p>
-                    <input type="text" id="ans" class="quiz-input" placeholder="Scrivi qui...">
-                    <button class="btn" onclick="checkGrammar()">Invia</button>
-                `;
-            } else { showScreen('screen-home'); }
-        }
-
-        function checkGrammar() {
-            if(document.getElementById('ans').value.toLowerCase().trim() === grammarQ[currentQ].a) {
-                alert("¡Correcto!"); score++;
-            } else { alert("Error: era " + grammarQ[currentQ].a); }
-            currentQ++; loadGrammar();
-        }
-
-        // --- HOUSEWORK ---
-        const housework = [{ita: "Spolverare", esp: "polvorear"}, {ita: "Cucinare", esp: "cocinar"}];
-        function startHousework() {
-            currentQ = 0;
-            showScreen('screen-quiz');
-            loadHouse();
-        }
-        function loadHouse() {
-            if(currentQ < housework.length) {
-                document.getElementById('quiz-content').innerHTML = `
-                    <h3>Vocabolario Casa</h3>
-                    <p>Traduci: <b>${housework[currentQ].ita}</b></p>
-                    <input type="text" id="ans" class="quiz-input">
-                    <button class="btn" onclick="checkHouse()">Invia</button>
-                `;
-            } else { showScreen('screen-home'); }
-        }
-        function checkHouse() {
-            if(document.getElementById('ans').value.toLowerCase().trim() === housework[currentQ].esp) {
-                alert("Bien!");
-            } else { alert("Si dice: " + housework[currentQ].esp); }
-            currentQ++; loadHouse();
         }
 
         window.speechSynthesis.onvoiceschanged = () => {};
