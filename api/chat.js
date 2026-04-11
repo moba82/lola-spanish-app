@@ -1,16 +1,20 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Solo POST' });
 
-  const { message, lang } = req.body;
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  // Questo risolve l'errore 500: cerca la chiave in ogni nome possibile
+  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.API_KEY;
+
+  if (!apiKey) {
+    return res.status(200).json({ 
+      reply: "ERRORE TECNICO: La chiave non è stata trovata nelle impostazioni di Vercel. Assicurati che si chiami ANTHROPIC_API_KEY." 
+    });
+  }
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
-        'x-api-key': apiKey,
+        'x-api-key': apiKey.trim(),
         'anthropic-version': '2023-06-01',
         'content-type': 'application/json'
       },
@@ -19,25 +23,21 @@ export default async function handler(req, res) {
         max_tokens: 400,
         messages: [{ 
           role: "user", 
-          content: `Sei ${lang === 'en' ? 'Lily' : 'Lola'}. Parla con Zoe (livello A2). 
-          Se Zoe fa errori, scrivi sempre "Did you mean: [correzione]?" e poi rispondi.
-          Sii incoraggiante. Messaggio: ${message}` 
+          content: `Sei Lily/Lola. Colori: Verde Menta e Rosa. Zoe ha livello A2. 
+          Se sbaglia correggila con "Did you mean: [correzione]?". 
+          Rispondi al messaggio: ${req.body.message}` 
         }]
       })
     });
 
     const data = await response.json();
 
-    // Gestione errori specifici di Anthropic
     if (data.error) {
-      return res.status(200).json({ reply: "Anthropic Error: " + data.error.message });
+      return res.status(200).json({ reply: "Nota di Anthropic: " + data.error.message });
     }
 
-    // Risposta corretta
-    const botReply = data.content[0].text;
-    return res.status(200).json({ reply: botReply });
-
+    return res.status(200).json({ reply: data.content[0].text });
   } catch (error) {
-    return res.status(500).json({ reply: "Errore tecnico del server." });
+    return res.status(200).json({ reply: "Errore di connessione. Riprova tra un istante." });
   }
 }
