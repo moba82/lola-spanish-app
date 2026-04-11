@@ -1,6 +1,8 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-  
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   const { message, lang } = req.body;
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
@@ -15,15 +17,27 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "claude-3-haiku-20240307",
         max_tokens: 400,
-        messages: [{ role: "user", content: `Sei ${lang === 'en' ? 'Lily' : 'Lola'}. Parla con Zoe (livello A2). Usa il verde menta e rosa come colori nel cuore. Se sbaglia, correggila con "Did you mean: [correzione]?" Messaggio: ${message}` }]
+        messages: [{ 
+          role: "user", 
+          content: `Sei ${lang === 'en' ? 'Lily' : 'Lola'}. Parla con Zoe (livello A2). 
+          Se Zoe fa errori, scrivi sempre "Did you mean: [correzione]?" e poi rispondi.
+          Sii incoraggiante. Messaggio: ${message}` 
+        }]
       })
     });
 
     const data = await response.json();
-    if (data.error) return res.status(200).json({ reply: "Errore Anthropic: " + data.error.message });
-    
-    res.status(200).json({ reply: data.content[0].text });
+
+    // Gestione errori specifici di Anthropic
+    if (data.error) {
+      return res.status(200).json({ reply: "Anthropic Error: " + data.error.message });
+    }
+
+    // Risposta corretta
+    const botReply = data.content[0].text;
+    return res.status(200).json({ reply: botReply });
+
   } catch (error) {
-    res.status(200).json({ reply: "Errore di connessione server." });
+    return res.status(500).json({ reply: "Errore tecnico del server." });
   }
 }
