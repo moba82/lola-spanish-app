@@ -1,18 +1,14 @@
 export default async function handler(req, res) {
-  // 1. Controllo che la richiesta sia corretta
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Metodo non consentito' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Solo POST' });
 
-  // 2. Recupero la chiave che abbiamo visto nella tua foto
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
-    return res.status(200).json({ reply: "Errore: Vercel non passa la chiave. Prova a rifare il Redeploy." });
+    return res.status(200).json({ reply: "ERRORE: Vercel non passa la chiave. Controlla Environment Variables." });
   }
 
   try {
-    // 3. Chiamata diretta ad Anthropic (senza librerie esterne)
+    // Usiamo il fetch nativo di Node.js (senza librerie esterne)
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -36,10 +32,8 @@ export default async function handler(req, res) {
       return res.status(200).json({ reply: "Nota di Anthropic: " + data.error.message });
     }
 
-    // 4. Invio la risposta a Zoe
     return res.status(200).json({ reply: data.content[0].text });
-
   } catch (error) {
-    return res.status(200).json({ reply: "Errore tecnico di rete. Riprova tra 10 secondi." });
+    return res.status(200).json({ reply: "Errore tecnico di rete: " + error.message });
   }
 }
