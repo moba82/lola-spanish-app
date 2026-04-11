@@ -1,121 +1,1010 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lily & Lola Academy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --mint: #bbf7d0; --pink: #f472b6; --pink-dark: #db2777; --bg: #fdf2f8; }
-        body { background: var(--bg); font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
-        .screen { display: none; width: 100%; max-width: 450px; text-align: center; animation: fadeIn 0.5s; }
-        .screen.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .card { background: white; border-radius: 30px; padding: 25px; border: 4px solid var(--mint); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .avatar { width: 100px; height: 100px; background: var(--pink); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 4px solid white; box-shadow: 0 5px 15px rgba(244,114,182,0.3); transition: 0.3s; }
-        .talking { transform: scale(1.1); box-shadow: 0 0 20px var(--pink); }
-        h1 { color: var(--pink-dark); font-weight: 900; }
-        .btn { background: var(--mint); color: #065f46; border: none; padding: 15px; border-radius: 50px; font-weight: 800; cursor: pointer; width: 100%; margin: 10px 0; font-size: 16px; box-shadow: 0 4px 0 #86efac; transition: 0.2s; }
-        .btn:active { transform: translateY(3px); box-shadow: none; }
-        .btn-pink { background: var(--pink); color: white; box-shadow: 0 4px 0 var(--pink-dark); }
-        #chat-box { height: 300px; overflow-y: auto; background: white; border: 2px solid var(--pink); border-radius: 20px; padding: 15px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
-        .msg { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-weight: 600; font-size: 15px; }
-        .msg.bot { align-self: flex-start; background: var(--pink); color: white; }
-        .msg.user { align-self: flex-end; background: var(--mint); color: #065f46; }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Español con Miguel</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#dc2626;--red2:#b91c1c;--orange:#ea580c;--orange2:#c2410c;
+  --amber:#f59e0b;--light:#fff7ed;--light2:#ffedd5;--border:#fed7aa;
+  --text:#431407;--sub:#9a3412;
+}
+body{
+  min-height:100vh;
+  background:linear-gradient(160deg,#fff1f0 0%,#fff7ed 50%,#fef3c7 100%);
+  font-family:"Nunito",sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px 16px;
+}
+@keyframes floatUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes sparkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+.miguel-wrap{position:relative;display:inline-block;animation:float 3s ease-in-out infinite;}
+.miguel-lottie{border-radius:50%;overflow:hidden;background:#fff1f0;}
+.sparkle{position:absolute;pointer-events:none;animation:sparkle 1.2s ease-in-out infinite;}
+.sparkle.s2{animation-delay:.4s;}
+.think-bubble{position:absolute;pointer-events:none;display:none;font-size:24px;top:-14px;right:-8px;animation:float 1.5s ease-in-out infinite;}
+
+.screen{display:none;width:100%;max-width:580px;}
+.screen.active{display:flex;flex-direction:column;align-items:center;}
+
+/* WELCOME */
+.welcome-card{
+  background:rgba(255,255,255,0.92);border-radius:36px;padding:40px 36px 44px;
+  text-align:center;box-shadow:0 16px 56px rgba(185,28,28,0.15);
+  border:1.5px solid rgba(252,165,165,0.5);animation:floatUp .6s ease both;
+  width:100%;max-width:400px;
+}
+.welcome-card h1{font-family:"Baloo 2",cursive;font-size:34px;color:var(--red);margin:8px 0;}
+.welcome-card p{color:var(--sub);font-size:16px;font-weight:600;line-height:1.8;margin-bottom:28px;}
+.primary-btn{
+  background:linear-gradient(135deg,var(--red),var(--orange));color:white;
+  border:none;border-radius:20px;padding:14px 48px;font-size:20px;font-weight:900;
+  font-family:"Nunito",sans-serif;cursor:pointer;
+  box-shadow:0 6px 20px rgba(185,28,28,0.38);transition:transform .15s;
+}
+.primary-btn:hover{transform:scale(1.05) translateY(-2px);}
+
+/* CALENDAR */
+.calendar-wrap{
+  width:100%;max-width:380px;margin:20px auto 0;
+  background:rgba(255,255,255,0.75);border-radius:20px;padding:16px 20px;
+  border:1.5px solid var(--border);box-shadow:0 4px 16px rgba(185,28,28,0.08);
+}
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.calendar-header h3{font-family:"Baloo 2",cursive;font-size:16px;color:var(--red);}
+.cal-nav{background:none;border:none;cursor:pointer;font-size:18px;color:var(--red);padding:2px 6px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dayname{font-size:10px;font-weight:800;color:#fca5a5;text-align:center;padding:2px 0;}
+.cal-day{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#6b7280;}
+.cal-day.practiced{background:linear-gradient(135deg,var(--red),var(--orange));color:white;box-shadow:0 2px 6px rgba(185,28,28,0.3);}
+.cal-day.today{border:2px solid var(--amber);color:var(--orange);}
+.cal-day.today.practiced{border:2px solid white;}
+.cal-day.empty{opacity:0;}
+.cal-streak{text-align:center;margin-top:10px;font-size:12px;font-weight:800;color:var(--red);}
+
+/* TOPICS */
+.topics-wrap{width:100%;padding:0 16px 32px;}
+.topics-header{text-align:center;margin-bottom:14px;}
+.topics-header h2{font-family:"Baloo 2",cursive;font-size:22px;color:var(--red);margin-top:4px;}
+.topic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.topic-btn{
+  border:2px solid;border-radius:18px;padding:14px 6px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  font-family:"Nunito",sans-serif;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 2px 10px rgba(0,0,0,0.07);
+}
+.topic-btn:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 10px 28px rgba(0,0,0,0.12);}
+.topic-btn .tlabel{font-size:11px;font-weight:800;color:var(--text);line-height:1.2;text-align:center;}
+.quiz-section-btns{display:flex;flex-direction:column;gap:8px;width:100%;margin-bottom:14px;}
+.qbtn{
+  border:none;border-radius:16px;padding:12px 20px;font-size:15px;
+  font-weight:900;font-family:"Nunito",sans-serif;cursor:pointer;
+  color:white;transition:transform .15s;text-align:left;
+}
+.qbtn:hover{transform:scale(1.02);}
+
+/* CHAT */
+.chat-shell{
+  width:100%;height:calc(100vh - 40px);
+  background:rgba(255,255,255,0.97);border-radius:28px;
+  box-shadow:0 16px 56px rgba(185,28,28,0.14);
+  display:flex;flex-direction:column;overflow:hidden;border:1.5px solid var(--border);
+}
+.chat-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;border-bottom:1.5px solid var(--border);
+  background:rgba(255,247,237,0.95);flex-shrink:0;
+}
+.chat-body{flex:1;display:flex;gap:12px;padding:14px 14px 10px;overflow:hidden;align-items:flex-end;}
+.miguel-col{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-bottom:4px;}
+.miguel-col .mname{font-size:11px;font-weight:800;color:var(--sub);margin-top:4px;}
+.msg-col{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px;}
+
+.bubble-miguel{
+  background:rgba(255,247,237,0.98);border:1.5px solid var(--border);
+  border-radius:18px 18px 18px 4px;padding:12px 16px;
+  font-size:15px;font-weight:600;color:var(--text);
+  max-width:88%;line-height:1.75;box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  word-break:break-word;
+}
+.bubble-user{
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  border-radius:18px 18px 4px 18px;padding:12px 16px;
+  font-size:15px;font-weight:700;color:white;
+  max-width:88%;line-height:1.65;box-shadow:0 3px 12px rgba(185,28,28,0.25);
+  margin-left:auto;
+}
+.typing{font-size:22px;animation:pulse 1s infinite;}
+
+/* WORD TRANSLATION */
+.word-span{cursor:pointer;border-bottom:1.5px dashed var(--amber);transition:color .15s;}
+.word-span:hover{color:var(--orange);}
+.word-tooltip{
+  display:inline-block;background:var(--amber);color:white;
+  border-radius:8px;padding:2px 9px;font-size:12px;font-weight:800;
+  margin:0 2px;animation:floatUp .15s ease;vertical-align:middle;
+}
+
+.chat-inputbar{
+  display:flex;gap:8px;padding:10px 14px 16px;
+  border-top:1.5px solid var(--border);background:rgba(255,247,237,0.95);
+  flex-shrink:0;align-items:center;
+}
+.chat-inputbar input{
+  flex:1;border:1.5px solid var(--border);border-radius:14px;
+  padding:11px 16px;font-size:15px;font-family:"Nunito",sans-serif;
+  font-weight:700;outline:none;color:var(--text);background:white;
+}
+.chat-inputbar input:focus{border-color:var(--red);}
+.send-btn{
+  width:46px;height:46px;border-radius:13px;border:none;font-size:18px;
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--red),var(--orange));color:white;
+  box-shadow:0 4px 14px rgba(185,28,28,0.35);
+}
+.send-btn:disabled{background:#e8e0d5;box-shadow:none;cursor:default;opacity:.5;}
+.mic-btn{
+  width:46px;height:46px;border-radius:13px;border:2px solid #fecaca;
+  font-size:20px;cursor:pointer;transition:all .2s;flex-shrink:0;
+  background:#fff1f0;display:flex;align-items:center;justify-content:center;
+}
+.mic-btn.listening{
+  background:var(--red);border-color:var(--red);color:white;
+  box-shadow:0 0 0 5px rgba(220,38,38,0.25);
+}
+.back-btn{
+  background:var(--light2);border:none;border-radius:10px;padding:6px 14px;
+  cursor:pointer;font-weight:800;font-size:13px;color:var(--sub);font-family:"Nunito",sans-serif;
+}
+
+/* QUIZ */
+.quiz-shell{
+  width:100%;height:calc(100vh - 40px);background:rgba(255,255,255,0.97);
+  border-radius:28px;box-shadow:0 16px 56px rgba(185,28,28,0.14);
+  display:flex;flex-direction:column;overflow:hidden;border:1.5px solid var(--border);
+}
+.quiz-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;border-bottom:1.5px solid var(--border);
+  background:rgba(255,247,237,0.95);flex-shrink:0;
+}
+.quiz-body{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:20px 16px;gap:14px;overflow-y:auto;
+}
+.quiz-progress{width:100%;max-width:440px;height:8px;background:#fee2e2;border-radius:10px;overflow:hidden;}
+.quiz-progress-bar{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:10px;transition:width .4s ease;}
+.quiz-card{
+  background:white;border-radius:24px;padding:26px 22px;
+  text-align:center;width:100%;max-width:440px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.08);border:2px solid var(--border);
+}
+.quiz-label{font-size:11px;font-weight:800;color:#fca5a5;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.quiz-word{font-family:"Baloo 2",cursive;font-size:28px;color:var(--red);margin-bottom:4px;}
+.quiz-hint{font-size:13px;color:#9ca3af;margin-bottom:16px;}
+.quiz-input{
+  width:100%;border:2px solid var(--border);border-radius:14px;
+  padding:13px 18px;font-size:17px;font-family:"Nunito",sans-serif;
+  font-weight:700;outline:none;color:var(--text);text-align:center;transition:border .2s;
+}
+.quiz-input:focus{border-color:var(--red);}
+.quiz-input.correct{border-color:#22c55e;background:#f0fdf4;color:#15803d;}
+.quiz-input.wrong{border-color:#f87171;background:#fef2f2;color:#dc2626;}
+.quiz-feedback{font-size:15px;font-weight:800;min-height:22px;margin-top:6px;}
+.quiz-feedback.correct{color:#15803d;}
+.quiz-feedback.wrong{color:#dc2626;}
+.quiz-btn{
+  background:linear-gradient(135deg,var(--red),var(--orange));color:white;
+  border:none;border-radius:16px;padding:13px 36px;font-size:16px;
+  font-weight:900;font-family:"Nunito",sans-serif;cursor:pointer;
+  box-shadow:0 4px 14px rgba(185,28,28,0.35);transition:transform .15s;
+  width:100%;max-width:440px;
+}
+.quiz-btn:hover{transform:scale(1.02);}
+.quiz-btn.sec{background:linear-gradient(135deg,#6b7280,#4b5563);box-shadow:0 4px 14px rgba(0,0,0,0.2);}
+.quiz-score-card{
+  background:white;border-radius:24px;padding:36px 28px;text-align:center;
+  width:100%;max-width:440px;box-shadow:0 8px 32px rgba(0,0,0,0.08);border:2px solid var(--border);
+}
+.quiz-score-big{font-family:"Baloo 2",cursive;font-size:64px;color:var(--red);line-height:1;}
+.quiz-score-label{font-size:16px;font-weight:700;color:#6b7280;margin:8px 0 20px;}
+.quiz-wrong-list{text-align:left;margin-top:16px;}
+.quiz-wrong-item{font-size:14px;color:#6b7280;padding:6px 0;border-bottom:1px solid #fff7ed;font-weight:600;}
+.quiz-wrong-item b{color:var(--red);}
+
+.mc-options{display:flex;flex-direction:column;gap:8px;}
+.mc-btn{
+  border:2px solid var(--border);border-radius:12px;padding:10px 16px;
+  font-size:15px;font-weight:700;font-family:"Nunito",sans-serif;
+  cursor:pointer;background:white;color:var(--text);text-align:left;transition:all .15s;
+}
+.mc-btn:hover{background:var(--light);border-color:var(--red);}
+.mc-btn.correct{background:#f0fdf4;border-color:#22c55e;color:#15803d;}
+.mc-btn.wrong{background:#fef2f2;border-color:#f87171;color:#dc2626;}
+.mc-btn.show-correct{background:#f0fdf4;border-color:#22c55e;color:#15803d;}
+.mc-btn:disabled{cursor:default;}
+
+.fill-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:16px;font-weight:700;color:var(--text);}
+.fill-input{
+  border:2px solid var(--border);border-radius:10px;padding:8px 12px;
+  font-size:15px;font-family:"Nunito",sans-serif;font-weight:700;
+  outline:none;color:var(--text);min-width:110px;transition:border .2s;
+}
+.fill-input:focus{border-color:var(--red);}
+.fill-input.correct{border-color:#22c55e;background:#f0fdf4;color:#15803d;}
+.fill-input.wrong{border-color:#f87171;background:#fef2f2;color:#dc2626;}
+.grammar-type{font-size:11px;font-weight:900;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.grammar-question{font-size:15px;font-weight:700;color:#1f2937;line-height:1.6;margin-bottom:14px;}
+.grammar-feedback{font-size:14px;font-weight:800;margin-top:10px;min-height:20px;}
+.grammar-feedback.correct{color:#15803d;}
+.grammar-feedback.wrong{color:#dc2626;}
+.grammar-explanation{font-size:13px;color:#6b7280;margin-top:6px;font-weight:600;font-style:italic;}
+
+.verb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%;max-width:440px;}
+.verb-col-head{font-size:10px;font-weight:900;text-align:center;color:#fca5a5;text-transform:uppercase;letter-spacing:1px;padding:4px 0;}
+.verb-base{font-family:"Baloo 2",cursive;font-size:18px;color:var(--red);text-align:center;padding:10px 4px;background:#fff1f0;border-radius:12px;border:2px solid var(--border);font-weight:800;}
+.verb-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:8px 4px;font-size:13px;font-family:"Nunito",sans-serif;font-weight:700;outline:none;color:var(--text);text-align:center;transition:border .2s;}
+.verb-input:focus{border-color:var(--red);}
+.verb-input.correct{border-color:#22c55e;background:#f0fdf4;color:#15803d;}
+.verb-input.wrong{border-color:#f87171;background:#fef2f2;color:#dc2626;}
+.verb-answer{font-size:11px;font-weight:800;color:#dc2626;text-align:center;min-height:16px;margin-top:2px;}
+
+.reading-card{background:white;border-radius:20px;padding:20px 18px;width:100%;max-width:480px;border:2px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.07);}
+.reading-title{font-family:"Baloo 2",cursive;font-size:18px;color:var(--red);margin-bottom:4px;}
+.reading-meta{font-size:12px;color:#9ca3af;font-weight:700;margin-bottom:12px;}
+.reading-text{font-size:14px;line-height:1.85;color:#1f2937;font-weight:600;background:#fff7ed;border-radius:12px;padding:14px;margin-bottom:14px;max-height:220px;overflow-y:auto;}
+.reading-question{font-size:15px;font-weight:800;color:#1f2937;margin:14px 0 10px;}
+
+.sound-banner{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--red),var(--orange));color:white;
+  border:none;border-radius:20px;padding:12px 28px;font-size:16px;
+  font-weight:800;font-family:"Nunito",sans-serif;cursor:pointer;
+  box-shadow:0 6px 20px rgba(185,28,28,0.4);z-index:999;animation:floatUp .4s ease both;
+}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+</style>
 </head>
 <body>
 
-    <div id="screen-home" class="screen active">
-        <div class="card">
-            <div class="avatar">🌸</div>
-            <h1>Lily & Lola</h1>
-            <p>Scegli la lingua per iniziare:</p>
-            <button class="btn" onclick="startApp('en')">🇬🇧 English with Lily</button>
-            <button class="btn btn-pink" onclick="startApp('es')">🇪🇸 Español con Lola</button>
-        </div>
+<button class="sound-banner" id="sound-banner" onclick="unlockAudio()">🔊 Tocca per attivare il suono!</button>
+
+<!-- WELCOME -->
+<div id="screen-welcome" class="screen active">
+  <div class="welcome-card">
+    <div class="miguel-wrap" style="margin:0 auto;">
+      <div id="lottie-welcome" class="miguel-lottie" style="width:180px;height:180px;"></div>
+      <span class="sparkle" style="top:-8px;right:0;font-size:22px;">✨</span>
+      <span class="sparkle s2" style="top:10px;right:18px;font-size:14px;">⭐</span>
     </div>
-
-    <div id="screen-chat" class="screen">
-        <div class="card">
-            <div id="chat-avatar" class="avatar">🌸</div>
-            <div id="chat-box"></div>
-            <button class="btn btn-pink" id="mic-btn" onclick="toggleListening()">🎤 Tocca e Parla</button>
-            <button class="btn" onclick="location.reload()" style="background:#eee; box-shadow:none; color:gray;">Indietro</button>
-        </div>
+    <h1>¡Hola! Soy Miguel 🌶️</h1>
+    <p>Tu profesor de español.<br/>¡Vamos a practicar juntos!</p>
+    <button class="primary-btn" onclick="showScreen('screen-topics')">¡Empezamos! ✨</button>
+  </div>
+  <div class="calendar-wrap">
+    <div class="calendar-header">
+      <button class="cal-nav" onclick="calPrev()">‹</button>
+      <h3 id="cal-title"></h3>
+      <button class="cal-nav" onclick="calNext()">›</button>
     </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-streak" id="cal-streak"></div>
+  </div>
+</div>
 
-    <script>
-        let currentLang = 'en';
-        const synth = window.speechSynthesis;
+<!-- TOPICS -->
+<div id="screen-topics" class="screen">
+  <div class="topics-wrap">
+    <div class="topics-header">
+      <div class="miguel-wrap" style="margin:0 auto;">
+        <div id="lottie-topics" class="miguel-lottie" style="width:100px;height:100px;"></div>
+      </div>
+      <h2>¿Qué quieres practicar? 🌶️</h2>
+    </div>
+    <div class="quiz-section-btns">
+      <button class="qbtn" style="background:linear-gradient(135deg,#dc2626,#ea580c);" onclick="showScreen('screen-verbquiz')">🔤 Verbos irregulares — 3 formas</button>
+      <button class="qbtn" style="background:linear-gradient(135deg,#ea580c,#d97706);" onclick="showScreen('screen-vocabquiz')">🎯 Vocabulario — Quiz</button>
+      <button class="qbtn" style="background:linear-gradient(135deg,#d97706,#b45309);" onclick="showScreen('screen-grammarquiz')">📝 Gramática — Ejercicios</button>
+      <button class="qbtn" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);" onclick="showScreen('screen-reading')">📖 Comprensión lectora</button>
+    </div>
+    <p style="font-family:'Baloo 2',cursive;font-size:15px;color:var(--sub);margin-bottom:10px;text-align:center;">💬 O conversa con Miguel:</p>
+    <div class="topic-grid" id="topic-grid"></div>
+  </div>
+</div>
 
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
+<!-- CHAT -->
+<div id="screen-chat" class="screen">
+  <div class="chat-shell">
+    <div class="chat-topbar">
+      <button class="back-btn" onclick="showScreen('screen-topics')">← Temas</button>
+      <span id="chat-title" style="font-weight:800;color:var(--red);font-size:15px;"></span>
+      <div style="width:60px;"></div>
+    </div>
+    <div class="chat-body">
+      <div class="miguel-col">
+        <div class="miguel-wrap" id="miguel-chat-wrap">
+          <div id="lottie-chat" class="miguel-lottie" style="width:88px;height:88px;"></div>
+          <span class="sparkle" id="chat-sp1" style="top:-6px;right:-4px;font-size:16px;">✨</span>
+          <span class="think-bubble" id="think-chat">💭</span>
+        </div>
+        <span class="mname">Miguel</span>
+      </div>
+      <div class="msg-col" id="msg-col"></div>
+    </div>
+    <div style="padding:4px 14px 0;font-size:11px;color:#9ca3af;font-weight:700;background:rgba(255,247,237,0.95);">
+      💡 Tocca una parola per vedere la traduzione
+    </div>
+    <div class="chat-inputbar">
+      <button class="mic-btn" id="mic-btn" onclick="toggleMic()">🎤</button>
+      <input id="chat-input" type="text" placeholder="Scrivi o parla in spagnolo… 🇪🇸" onkeydown="handleKey(event)"/>
+      <button class="send-btn" id="send-btn" onclick="sendMsg()" disabled>➤</button>
+    </div>
+  </div>
+</div>
 
-        function startApp(l) {
-            currentLang = l;
-            document.getElementById('chat-avatar').innerText = (l === 'en' ? "🌸" : "💃");
-            showScreen('screen-chat');
-            speak(l === 'en' ? "Hi Zoe! I'm Lily. How are you?" : "¡Hola Zoe! Soy Lola. ¿Cómo estás?");
-        }
+<!-- VERB QUIZ -->
+<div id="screen-verbquiz" class="screen">
+  <div class="quiz-shell">
+    <div class="quiz-topbar">
+      <button class="back-btn" onclick="showScreen('screen-topics')">← Temas</button>
+      <span style="font-weight:800;color:var(--red);font-size:15px;">🔤 Verbos Irregulares</span>
+      <span id="verb-counter" style="font-weight:800;color:#fca5a5;font-size:13px;"></span>
+    </div>
+    <div class="quiz-body" id="verb-body"></div>
+  </div>
+</div>
 
-        function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = (currentLang === 'en' ? 'en-US' : 'es-ES');
-            utterance.onstart = () => document.getElementById('chat-avatar').classList.add('talking');
-            utterance.onend = () => document.getElementById('chat-avatar').classList.remove('talking');
-            synth.speak(utterance);
-            addMessage(text, 'bot');
-        }
+<!-- VOCAB QUIZ -->
+<div id="screen-vocabquiz" class="screen">
+  <div class="quiz-shell">
+    <div class="quiz-topbar">
+      <button class="back-btn" onclick="showScreen('screen-topics')">← Temas</button>
+      <span style="font-weight:800;color:var(--orange);font-size:15px;">🎯 Vocabulario</span>
+      <span id="vocab-counter" style="font-weight:800;color:#fca5a5;font-size:13px;"></span>
+    </div>
+    <div class="quiz-body" id="vocab-body"></div>
+  </div>
+</div>
 
-        function addMessage(text, side) {
-            const box = document.getElementById('chat-box');
-            const div = document.createElement('div');
-            div.className = `msg ${side}`;
-            div.innerText = text;
-            box.appendChild(div);
-            box.scrollTop = box.scrollHeight;
-        }
+<!-- GRAMMAR QUIZ -->
+<div id="screen-grammarquiz" class="screen">
+  <div class="quiz-shell">
+    <div class="quiz-topbar">
+      <button class="back-btn" onclick="showScreen('screen-topics')">← Temas</button>
+      <span style="font-weight:800;color:var(--orange2);font-size:15px;">📝 Gramática</span>
+      <span id="grammar-counter" style="font-weight:800;color:#fca5a5;font-size:13px;"></span>
+    </div>
+    <div class="quiz-body" id="grammar-body"></div>
+  </div>
+</div>
 
-        async function toggleListening() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) return alert("Browser non supportato");
-            
-            const recognition = new SpeechRecognition();
-            recognition.lang = (currentLang === 'en' ? 'en-US' : 'es-ES');
-            
-            recognition.onstart = () => {
-                document.getElementById('mic-btn').innerText = "👂 Ti ascolto...";
-                document.getElementById('mic-btn').style.background = "#ff4d4d";
-            };
+<!-- READING -->
+<div id="screen-reading" class="screen">
+  <div class="quiz-shell">
+    <div class="quiz-topbar">
+      <button class="back-btn" onclick="showScreen('screen-topics')">← Temas</button>
+      <span style="font-weight:800;color:#7c3aed;font-size:15px;">📖 Comprensión Lectora</span>
+      <span id="reading-counter" style="font-weight:800;color:#c4b5fd;font-size:13px;"></span>
+    </div>
+    <div class="quiz-body" id="reading-body"></div>
+  </div>
+</div>
 
-            recognition.onresult = async (event) => {
-                const userText = event.results[0][0].transcript;
-                addMessage(userText, 'user');
-                
-                try {
-                    const response = await fetch('/api/chat', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: userText, lang: currentLang })
-                    });
-                    const data = await response.json();
-                    if (data.reply) speak(data.reply);
-                    else speak("I have a technical problem, check my credits.");
-                } catch (err) {
-                    speak("Connection error.");
-                }
-            };
+<script>
+const LOTTIE_DATA = {"v":"4.8.0","meta":{"g":"LottieFiles AE 1.1.0","a":"","k":"","d":"","tc":""},"fr":60,"ip":0,"op":600,"w":386,"h":278,"nm":"Talking","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"Group 7","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[193.224,139.761,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[172.448,201.523],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"mouth","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,2.973,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[31.051,13.999],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"Group 6","parent":2,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[31.051,13.999],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":4,"ty":4,"nm":"Path 37","parent":3,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,-2.473,0],"ix":2},"a":{"a":0,"k":[15.525,4.527,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":1,"k":[{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":0,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":11,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":30,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":47,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":62,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":71,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":81,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":93,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":107,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":120,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":131,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":143,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":158,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":170,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":186,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":197,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":210,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":224,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":239,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":248,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":262,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":276,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":296,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":311,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":326,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":341,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":350,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":363,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":372,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":385,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":396,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":404,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":423,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":440,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":455,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":464,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":477,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":486,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":499,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"t":510,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":524,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":537,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":538,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":547,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":560,"s":[{"i":[[-7.188,2.938],[6.494,0.81]],"o":[[-6.885,0.943],[5.051,2.198]],"v":[[29.114,2.39],[5.688,2.692]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":569,"s":[{"i":[[-5.25,11.14],[9.614,-6.89]],"o":[[-10.312,-6.11],[5.614,9.048]],"v":[[25.176,1.812],[8.562,3.655]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":582,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]},{"t":593,"s":[{"i":[[-3.159,11.93],[5.879,1.987]],"o":[[-6.233,2.314],[3.249,11.838]],"v":[[31.051,0],[0,0.28]],"c":true}]}],"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 37","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":5,"ty":4,"nm":"Path 36","parent":3,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0.751,6.17,0],"ix":2},"a":{"a":0,"k":[3.146,0.829,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.84,0.493],[-0.138,0.236],[-0.236,-0.138],[-0.87,0],[-0.655,0.396],[-0.142,-0.234],[0.233,-0.141],[1.035,0]],"o":[[-0.235,-0.137],[0.138,-0.235],[0.682,0.399],[0.869,0],[0.232,-0.142],[0.14,0.232],[-0.817,0.495],[-1.034,0]],"v":[[0.244,0.92],[0.068,0.244],[0.744,0.068],[3.166,0.667],[5.543,0.072],[6.222,0.239],[6.055,0.917],[3.166,1.659]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.839215686275,0.498039215686,0.329411764706,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 36","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":6,"ty":4,"nm":"eyebrows","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,-37.559,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[54.265,5.278],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":7,"ty":4,"nm":"Group 5","parent":6,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":0,"s":[0,0,0],"to":[0,0.875,0],"ti":[0,0.458,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":15,"s":[0,5.25,0],"to":[0,-0.458,0],"ti":[0,0.875,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":25,"s":[0,-2.75,0],"to":[0,-0.875,0],"ti":[0,-0.458,0]},{"i":{"x":0.667,"y":0.667},"o":{"x":0.333,"y":0.333},"t":35,"s":[0,0,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":284,"s":[0,0,0],"to":[0,0.875,0],"ti":[0,0.458,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":299,"s":[0,5.25,0],"to":[0,-0.458,0],"ti":[0,0.875,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":309,"s":[0,-2.75,0],"to":[0,-0.875,0],"ti":[0,-0.458,0]},{"i":{"x":0.667,"y":0.667},"o":{"x":0.333,"y":0.333},"t":319,"s":[0,0,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":558,"s":[0,0,0],"to":[0,0.875,0],"ti":[0,0.458,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":573,"s":[0,5.25,0],"to":[0,-0.458,0],"ti":[0,0.875,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":583,"s":[0,-2.75,0],"to":[0,-0.875,0],"ti":[0,-0.458,0]},{"t":593,"s":[0,0,0]}],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[54.265,5.278],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":8,"ty":4,"nm":"Path 35","parent":7,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[18.82,0,0],"ix":2},"a":{"a":0,"k":[8.312,2.639,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-1.953,1.014],[-0.155,0.061],[-1.933,-0.139],[-1.587,-0.906],[0.819,-0.863],[0.845,0.274],[1.394,-0.029],[1.184,-0.457],[0.046,-0.019],[1.647,1.13]],"o":[[0.153,-0.068],[1.789,-0.644],[1.892,0.201],[0.74,0.476],[-0.334,0.092],[-1.316,-0.389],[-1.299,0.059],[-0.033,0.006],[-2.415,1.174],[-2.535,-1.348]],"v":[[3.077,0.915],[3.538,0.725],[8.777,0.045],[13.668,1.579],[16.479,5.258],[12.421,3.605],[8.644,3.097],[5.184,3.801],[4.892,3.923],[1.049,4.722]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.247058823529,0.152941176471,0.086274509804,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 35","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":9,"ty":4,"nm":"Path 34","parent":7,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-18.82,0,0],"ix":2},"a":{"a":0,"k":[8.312,2.639,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[1.954,1.014],[0.156,0.061],[1.932,-0.139],[1.586,-0.906],[-0.82,-0.863],[-0.846,0.274],[-1.393,-0.029],[-1.184,-0.457],[-0.046,-0.019],[-1.647,1.13]],"o":[[-0.152,-0.068],[-1.789,-0.644],[-1.892,0.201],[-0.741,0.476],[0.334,0.092],[1.315,-0.389],[1.299,0.059],[0.032,0.006],[2.414,1.174],[2.536,-1.348]],"v":[[13.546,0.915],[13.085,0.725],[7.847,0.045],[2.956,1.579],[0.145,5.258],[4.204,3.605],[7.979,3.097],[11.44,3.801],[11.732,3.923],[15.574,4.722]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.247058823529,0.152941176471,0.086274509804,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 34","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":10,"ty":4,"nm":"glasses","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0.019,-22.971,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[84.183,29.339],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":11,"ty":4,"nm":"Group 4","parent":10,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[84.183,29.339],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":12,"ty":4,"nm":"Path 33","parent":11,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-0.019,-2.847,0],"ix":2},"a":{"a":0,"k":[7.005,2.181,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.002,-0.006],[0.467,0.285],[-0.285,0.467],[-5.177,0],[-0.005,-0.008],[0.468,-0.286],[0.286,0.466],[4.056,0]],"o":[[-0.285,0.466],[-0.467,-0.286],[0.004,-0.008],[5.178,0],[0.285,0.467],[-0.466,0.285],[-0.002,-0.006],[-4.055,0]],"v":[[1.835,3.887],[0.474,4.216],[0.145,2.855],[7.004,0],[13.864,2.855],[13.534,4.216],[12.173,3.887],[7.004,1.985]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.180392156863,0.117647058824,0.066666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 33","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":13,"ty":4,"nm":"Path 32","parent":11,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[36.735,1.305,0],"ix":2},"a":{"a":0,"k":[5.357,2.563,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-0.184,0.512],[-0.513,-0.185],[0,0],[0.183,-0.513],[0.513,0.183]],"o":[[-0.514,-0.184],[0.184,-0.515],[0,0],[0.514,0.185],[-0.184,0.515],[0,0]],"v":[[0.655,1.92],[0.058,0.657],[1.321,0.059],[10.059,3.205],[10.656,4.469],[9.392,5.068]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.180392156863,0.117647058824,0.066666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 32","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":14,"ty":4,"nm":"Path 31","parent":11,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-36.734,1.305,0],"ix":2},"a":{"a":0,"k":[5.357,2.563,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-0.185,-0.515],[0.514,-0.184],[0,0],[0.185,0.515],[-0.514,0.185]],"o":[[0.513,-0.185],[0.184,0.512],[0,0],[-0.513,0.183],[-0.183,-0.513],[0,0]],"v":[[9.393,0.059],[10.657,0.657],[10.059,1.92],[1.322,5.068],[0.058,4.469],[0.656,3.205]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.180392156863,0.117647058824,0.066666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 31","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":15,"ty":4,"nm":"Path 30","parent":11,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[18.795,0,0],"ix":2},"a":{"a":0,"k":[14.669,14.669,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-2.655,-2.655],[0,-4.051],[2.654,-2.654],[4.05,0],[2.655,2.654],[0,4.05],[-2.654,2.653],[-4.051,0]],"o":[[4.05,0],[2.654,2.653],[0,4.05],[-2.655,2.654],[-4.051,0],[-2.654,-2.654],[0,-4.051],[2.655,-2.655],[0,0]],"v":[[14.669,0],[25.042,4.298],[29.338,14.67],[25.042,25.042],[14.669,29.339],[4.296,25.042],[0,14.67],[4.296,4.298],[14.669,0]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ind":1,"ty":"sh","ix":2,"ks":{"a":0,"k":{"i":[[2.205,2.205],[3.365,0],[2.205,-2.206],[0,-3.365],[-2.206,-2.206],[-3.366,0],[-2.205,2.205],[0,3.365]],"o":[[-2.205,-2.206],[-3.366,0],[-2.206,2.205],[0,3.365],[2.205,2.205],[3.365,0],[2.205,-2.206],[0,-3.365]],"v":[[23.287,6.052],[14.669,2.482],[6.051,6.052],[2.481,14.67],[6.051,23.288],[14.669,26.858],[23.287,23.288],[26.857,14.67]],"c":true},"ix":2},"nm":"Path 2","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.180392156863,0.117647058824,0.066666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 30","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":16,"ty":4,"nm":"Path 29","parent":11,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-18.832,0,0],"ix":2},"a":{"a":0,"k":[14.669,14.669,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-2.654,-2.655],[0,-4.051],[2.655,-2.654],[4.051,0],[2.655,2.654],[0,4.05],[-2.654,2.653],[-4.05,0]],"o":[[4.051,0],[2.655,2.653],[0,4.05],[-2.654,2.654],[-4.05,0],[-2.654,-2.654],[0,-4.051],[2.655,-2.655],[0,0]],"v":[[14.669,0],[25.041,4.298],[29.339,14.67],[25.041,25.042],[14.669,29.339],[4.296,25.042],[0,14.67],[4.296,4.298],[14.669,0]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ind":1,"ty":"sh","ix":2,"ks":{"a":0,"k":{"i":[[2.206,2.205],[3.365,0],[2.206,-2.206],[0,-3.365],[-2.204,-2.206],[-3.365,0],[-2.205,2.205],[0,3.365]],"o":[[-2.205,-2.206],[-3.365,0],[-2.204,2.205],[0,3.365],[2.206,2.205],[3.365,0],[2.206,-2.206],[0,-3.365]],"v":[[23.287,6.052],[14.669,2.482],[6.05,6.052],[2.48,14.67],[6.05,23.288],[14.669,26.858],[23.287,23.288],[26.857,14.67]],"c":true},"ix":2},"nm":"Path 2","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.180392156863,0.117647058824,0.066666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 29","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":17,"ty":4,"nm":"Eyes","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0.128,-24.832,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[44.036,8.195],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":18,"ty":4,"nm":"left eye","parent":17,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[17.911,0,0],"ix":2},"a":{"a":0,"k":[4.107,4.098,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":1,"k":[{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":0,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":9,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":14,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":19,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":24,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"t":29,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":245,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":254,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":259,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":264,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":269,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"t":274,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":566,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":575,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":580,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":585,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":590,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"t":595,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]}],"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.125490196078,0.125490196078,0.117647058824,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 28","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":19,"ty":4,"nm":"right eye","parent":17,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-17.912,0,0],"ix":2},"a":{"a":0,"k":[4.106,4.098,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":1,"k":[{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":0,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":9,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":14,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":19,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":24,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"t":29,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":245,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":254,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":259,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":264,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":269,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"t":274,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":566,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":575,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":580,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":585,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]},{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":590,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.514,4.902],[6.996,4.81],[1.263,5.731],[0.781,5.822]],"c":true}]},{"t":595,"s":[{"i":[[-1.838,-1.325],[1.328,-1.833],[1.837,1.325],[-1.328,1.834]],"o":[[1.837,1.327],[-1.33,1.834],[-1.839,-1.326],[1.328,-1.834]],"v":[[6.512,0.777],[7.434,6.498],[1.701,7.419],[0.779,1.697]],"c":true}]}],"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.125490196078,0.125490196078,0.117647058824,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 27","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":20,"ty":4,"nm":"Hair","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,-57.916,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[103.536,85.69],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":21,"ty":4,"nm":"Group 3","parent":20,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[103.536,85.69],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":22,"ty":4,"nm":"Path 26","parent":21,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-36.092,2.494,0],"ix":2},"a":{"a":0,"k":[5.91,15.857,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.137,2.537],[-0.273,0.014],[-0.014,-0.272],[1.303,-3.739],[1.969,-2.499],[0,-0.018],[0.272,0.005],[-0.004,0.274],[-4.036,5.121],[-1.229,3.522]],"o":[[-0.013,-0.273],[0.273,-0.013],[0.144,2.662],[-1.262,3.619],[-3.83,4.859],[-0.005,0.273],[-0.274,-0.004],[0,-0.017],[1.902,-2.414],[1.263,-3.626]],"v":[[10.814,0.521],[11.284,0.001],[11.803,0.47],[9.886,10.657],[4.877,20.366],[0.989,31.228],[0.487,31.714],[0,31.212],[4.098,19.753],[8.952,10.331]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.262745098039,0.176470588235,0.298039215686,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 26","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":23,"ty":4,"nm":"Path 25","parent":21,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[8.256,-25.706,0],"ix":2},"a":{"a":0,"k":[26.887,9.132,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[19.837,-9.136],[0.114,0.249],[-0.249,0.114],[-11.429,-8.048],[-2.662,-1.512],[0.135,-0.238],[0.239,0.136],[2.84,2]],"o":[[-0.248,0.115],[-0.114,-0.247],[20.355,-9.376],[2.824,1.988],[0.238,0.135],[-0.135,0.238],[-2.712,-1.539],[-11.213,-7.894]],"v":[[0.702,4.825],[0.045,4.583],[0.288,3.927],[45.325,11.93],[53.523,17.339],[53.709,18.013],[53.034,18.199],[44.755,12.739]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.262745098039,0.176470588235,0.298039215686,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 25","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":24,"ty":4,"nm":"Path 24","parent":21,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[10.488,-0.394,0],"ix":2},"a":{"a":0,"k":[32.533,26.099,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[7.874,0],[0,0.273],[-0.274,0],[-6.77,-2.25],[-5.95,-4.204],[-3.642,-6.065],[-0.584,-8.657],[0.273,-0.018],[0.018,0.272],[3.563,5.932],[6.163,4.353],[7.867,2.614]],"o":[[-0.274,0],[0,-0.275],[7.978,0],[7.975,2.65],[6.271,4.429],[3.643,6.066],[0.018,0.272],[-0.273,0.017],[-0.573,-8.492],[-3.564,-5.935],[-5.883,-4.156],[-6.669,-2.216]],"v":[[0.495,0.991],[0,0.496],[0.495,0],[22.672,3.632],[43.648,14.335],[58.62,29.831],[65.065,51.671],[64.604,52.198],[64.076,51.737],[57.771,30.339],[43.078,15.145],[22.362,4.571]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.262745098039,0.176470588235,0.298039215686,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 24","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":25,"ty":4,"nm":"Path 23","parent":21,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-6.581,-10.504,0],"ix":2},"a":{"a":0,"k":[20.585,11.393,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[2.829,5.246],[-0.241,0.13],[-0.129,-0.24],[-6.53,-3.543],[-6.851,-0.948],[0.037,-0.271],[0.271,0.037],[8.431,4.574]],"o":[[-0.129,-0.241],[0.24,-0.13],[2.726,5.056],[8.329,4.519],[0.271,0.037],[-0.038,0.27],[-6.953,-0.962],[-6.68,-3.623]],"v":[[0.059,0.73],[0.261,0.059],[0.932,0.26],[15.852,13.306],[40.742,21.801],[41.165,22.359],[40.606,22.782],[15.378,14.178]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.262745098039,0.176470588235,0.298039215686,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 23","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":26,"ty":4,"nm":"Path 22","parent":21,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[51.768,42.845,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-6.154,-0.482],[5.564,-3.927],[1.757,-9.657],[5.467,-9.574],[5.74,7.938],[5.932,3.978],[1.316,-0.62],[6.544,1.66],[0.721,-0.708],[8.798,5.905],[3.382,-1.99],[2.376,3.306],[0,0],[0.833,-1.731],[-13.676,3.731],[5.549,-1.04],[-6.513,0.728],[-8.315,3.669],[0.803,-0.487],[0,0],[-11.926,-9.565]],"o":[[1.908,0.365],[5.142,6.48],[-0.375,2.061],[-0.507,0.889],[-2.913,-4.027],[-0.061,1.13],[-5.03,2.371],[1.883,1.94],[-2.252,2.212],[-2.132,7.035],[-9.052,5.326],[-10.897,-15.158],[-1.056,1.675],[-1.503,3.128],[0,0],[-2.036,0.383],[0.187,-2.833],[3.857,-1.702],[-3.963,2.401],[30.427,-14.354],[3.605,2.892]],"v":[[102.42,25.509],[98.514,31.368],[102.69,57.799],[91.045,84.049],[85.136,57.128],[73.891,44.349],[76.039,49.183],[50.298,47.445],[53.381,51.499],[28.087,44.353],[19.563,60.848],[12.081,85.36],[3.931,50.574],[0.841,55.422],[11.985,26.049],[4.279,26.344],[14.795,20.384],[24.562,2.511],[33.936,0.139],[28.833,5.879],[85.027,16.349]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.207843137255,0.145098039216,0.239215686275,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 22","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":27,"ty":4,"nm":"nose","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[2.515,-15.175,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[6.77,12.899],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":28,"ty":4,"nm":"Path 21","parent":27,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[3.385,6.45,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[1.226,0],[0,0.275],[-0.273,0],[-1.098,0.186],[0,0.411],[0.004,0.025],[-0.27,0.043],[-0.043,-0.271],[0,-1.489],[1.382,-0.234]],"o":[[-0.273,0],[0,-0.273],[1.191,0],[0.905,-0.154],[0,-1.428],[-0.042,-0.269],[0.269,-0.042],[0.003,0.026],[0,1.045],[-1.184,0.202]],"v":[[0.496,12.899],[0,12.403],[0.496,11.907],[4.209,11.71],[5.778,10.9],[4.327,0.572],[4.739,0.006],[5.305,0.417],[6.77,10.9],[4.372,12.686]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.839215686275,0.498039215686,0.329411764706,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 21","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":29,"ty":4,"nm":"face","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0.094,-30.227,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[100.805,108.948],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":30,"ty":4,"nm":"Group 2","parent":29,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[100.805,108.948],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":31,"ty":4,"nm":"Path 20","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[24.599,19.576,0],"ix":2},"a":{"a":0,"k":[5.823,4.172,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[2.337,-1.793],[-2.21,-1.446],[-2.337,1.794],[2.21,1.447]],"o":[[-2.336,1.794],[2.21,1.447],[2.336,-1.793],[-2.21,-1.446]],"v":[[1.821,1.552],[1.593,7.419],[9.826,6.791],[10.054,0.924]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.854901960784,0.564705882353,0.466666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 20","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":32,"ty":4,"nm":"Path 19","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-24.53,19.576,0],"ix":2},"a":{"a":0,"k":[5.823,4.172,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-2.336,-1.793],[2.21,-1.446],[2.337,1.794],[-2.21,1.447]],"o":[[2.337,1.794],[-2.21,1.447],[-2.336,-1.793],[2.21,-1.446]],"v":[[9.825,1.552],[10.054,7.419],[1.821,6.791],[1.593,0.924]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.854901960784,0.564705882353,0.466666666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 19","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":33,"ty":4,"nm":"Path 18","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-42.395,20.826,0],"ix":2},"a":{"a":0,"k":[4.666,5.635,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,-1.508],[0.275,0],[0,0.273],[-0.558,0.685],[-0.644,0.015],[-0.632,-0.358],[-0.827,-1.89],[-0.112,-0.706],[0.029,-0.146],[0,0],[0.399,0.086],[0.179,0.18],[0.638,-0.063],[0.156,-0.111],[0.053,-0.177],[-0.546,-0.815],[0.227,-0.151],[0.153,0.227],[-0.204,0.681],[-0.315,0.227],[-0.403,0.041],[-0.762,-0.531],[0.359,0.82],[1.303,0.737],[0.406,-0.01],[0.253,-0.31]],"o":[[0,0.273],[-0.274,0],[0,-1.753],[0.452,-0.556],[0.592,-0.014],[1.473,0.834],[0.516,1.18],[0.037,0.234],[0,0],[-0.086,0.389],[-0.155,-0.033],[-0.673,-0.676],[-0.231,0.023],[-0.138,0.1],[-0.124,0.417],[0.152,0.227],[-0.227,0.153],[-0.73,-1.09],[0.117,-0.395],[0.299,-0.214],[0.71,-0.072],[-0.178,-0.638],[-0.745,-1.704],[-0.481,-0.274],[-0.353,0.008],[-0.418,0.516]],"v":[[0.991,4.421],[0.495,4.917],[0,4.421],[0.903,0.826],[2.575,0.001],[4.434,0.545],[8.248,5.016],[9.3,8.15],[9.315,8.729],[9.308,8.756],[8.592,9.235],[8.089,8.919],[5.972,8.028],[5.383,8.232],[5.089,8.648],[5.646,10.5],[5.51,11.186],[4.823,11.05],[4.14,8.365],[4.806,7.429],[5.875,7.044],[8.187,7.714],[7.341,5.412],[3.945,1.406],[2.594,0.99],[1.671,1.45]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.839215686275,0.498039215686,0.329411764706,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 18","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":34,"ty":4,"nm":"Path 17","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[42.209,20.826,0],"ix":2},"a":{"a":0,"k":[4.667,5.635,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,-1.753],[0.274,0],[0,0.273],[0.419,0.516],[0.353,0.008],[0.481,-0.274],[0.746,-1.704],[0.177,-0.638],[-0.708,-0.072],[-0.298,-0.214],[-0.118,-0.395],[0.731,-1.09],[0.228,0.153],[-0.152,0.227],[0.125,0.417],[0.139,0.1],[0.23,0.023],[0.671,-0.676],[0.155,-0.033],[0.086,0.39],[0,0],[-0.037,0.234],[-0.515,1.18],[-1.473,0.834],[-0.591,-0.014],[-0.451,-0.556]],"o":[[0,0.273],[-0.275,0],[0,-1.508],[-0.251,-0.31],[-0.406,-0.01],[-1.303,0.737],[-0.358,0.82],[0.761,-0.531],[0.404,0.041],[0.314,0.227],[0.203,0.681],[-0.152,0.227],[-0.227,-0.151],[0.546,-0.815],[-0.052,-0.177],[-0.155,-0.111],[-0.638,-0.063],[-0.18,0.18],[-0.398,0.086],[0,0],[-0.031,-0.146],[0.112,-0.706],[0.827,-1.89],[0.631,-0.358],[0.644,0.015],[0.558,0.685]],"v":[[9.335,4.421],[8.839,4.917],[8.342,4.421],[7.662,1.45],[6.739,0.99],[5.388,1.406],[1.992,5.412],[1.147,7.714],[3.458,7.044],[4.528,7.429],[5.195,8.365],[4.51,11.05],[3.823,11.186],[3.688,10.5],[4.244,8.648],[3.95,8.232],[3.362,8.028],[1.246,8.919],[0.741,9.235],[0.025,8.756],[0.02,8.729],[0.033,8.15],[1.085,5.016],[4.9,0.545],[6.759,0.001],[8.43,0.826]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.839215686275,0.498039215686,0.329411764706,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 17","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":35,"ty":4,"nm":"Path 16","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-0.094,0,0],"ix":2},"a":{"a":0,"k":[43.425,54.474,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[45.773,1.101],[-68.884,-2.891]],"o":[[-45.773,1.101],[68.884,-2.891]],"v":[[43.425,108.94],[43.425,0.055]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.894117647059,0.682352941176,0.486274509804,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 16","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":36,"ty":4,"nm":"Path 15","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[41.33,20.609,0],"ix":2},"a":{"a":0,"k":[9.072,9.975,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-2.587,-6.21],[8.797,-0.69],[0,0]],"o":[[0.172,-1.899],[2.588,6.21],[-8.798,0.691],[0,0]],"v":[[6.911,2.007],[17.433,4.076],[6.566,19.774],[0.355,18.912]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.894117647059,0.682352941176,0.486274509804,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 15","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":37,"ty":4,"nm":"Path 14","parent":30,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-41.33,20.609,0],"ix":2},"a":{"a":0,"k":[9.072,9.975,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[2.588,-6.21],[-8.797,-0.69],[0,0]],"o":[[-0.172,-1.899],[-2.587,6.21],[8.797,0.691],[0,0]],"v":[[11.235,2.007],[0.712,4.076],[11.58,19.774],[17.79,18.912]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.894117647059,0.682352941176,0.486274509804,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 14","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":38,"ty":4,"nm":"body","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,56.143,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[142.003,89.237],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":39,"ty":4,"nm":"Group 1","parent":38,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[142.003,89.237],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":40,"ty":4,"nm":"Path 13","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-0.192,-23.082,0],"ix":2},"a":{"a":0,"k":[0.505,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-0.273,0],[0,-0.273],[0,0],[0.273,0],[0,0.272]],"o":[[0,-0.273],[0.273,0],[0,0],[0,0.272],[-0.273,0],[0,0]],"v":[[0,0.495],[0.495,0],[0.989,0.495],[1.011,10.965],[0.517,11.459],[0.023,10.965]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 13","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":41,"ty":4,"nm":"Path 12","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[4.634,-23.082,0],"ix":2},"a":{"a":0,"k":[1.326,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.022,0.675],[-0.273,0.01],[-0.009,-0.273],[-0.007,-0.657],[-0.131,-1.578],[-0.004,-0.005],[0.229,-0.147],[0.147,0.23],[0.206,2.484],[0.014,1.311]],"o":[[-0.008,-0.273],[0.274,-0.009],[0.022,0.663],[0.015,1.27],[0.187,2.243],[0.147,0.231],[-0.23,0.147],[-0.003,-0.006],[-0.13,-1.567],[-0.008,-0.64]],"v":[[0,0.51],[0.479,0],[0.989,0.479],[1.025,2.453],[1.186,6.591],[2.575,10.699],[2.424,11.381],[1.741,11.23],[0.197,6.672],[0.037,2.461]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 12","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":42,"ty":4,"nm":"Path 11","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[9.033,-23.87,0],"ix":2},"a":{"a":0,"k":[1.326,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.021,0.675],[-0.273,0.009],[-0.009,-0.273],[-0.008,-0.658],[-0.132,-1.579],[-0.004,-0.006],[0.231,-0.148],[0.147,0.23],[0.206,2.483],[0.015,1.311]],"o":[[-0.008,-0.272],[0.273,-0.009],[0.021,0.663],[0.014,1.268],[0.186,2.243],[0.147,0.229],[-0.23,0.146],[-0.004,-0.006],[-0.13,-1.568],[-0.008,-0.64]],"v":[[0,0.509],[0.479,0],[0.989,0.478],[1.025,2.453],[1.186,6.59],[2.575,10.699],[2.423,11.381],[1.741,11.229],[0.197,6.672],[0.037,2.46]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 11","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":43,"ty":4,"nm":"Path 10","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[13.3,-24.657,0],"ix":2},"a":{"a":0,"k":[1.326,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.022,0.676],[-0.273,0.008],[-0.009,-0.272],[-0.007,-0.658],[-0.131,-1.579],[-0.004,-0.005],[0.229,-0.148],[0.146,0.231],[0.206,2.483],[0.014,1.311]],"o":[[-0.008,-0.273],[0.274,-0.009],[0.022,0.663],[0.015,1.269],[0.187,2.243],[0.147,0.23],[-0.23,0.147],[-0.003,-0.006],[-0.13,-1.567],[-0.008,-0.641]],"v":[[0,0.509],[0.479,0],[0.989,0.478],[1.025,2.453],[1.186,6.59],[2.575,10.698],[2.424,11.381],[1.741,11.229],[0.197,6.672],[0.037,2.461]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 10","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":44,"ty":4,"nm":"Path 9","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[17.37,-26.102,0],"ix":2},"a":{"a":0,"k":[1.326,5.73,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.022,0.676],[-0.273,0.009],[-0.009,-0.273],[-0.008,-0.658],[-0.131,-1.579],[-0.003,-0.005],[0.23,-0.146],[0.146,0.23],[0.207,2.484],[0.014,1.312]],"o":[[-0.008,-0.273],[0.274,-0.008],[0.022,0.663],[0.014,1.27],[0.187,2.243],[0.147,0.23],[-0.23,0.148],[-0.004,-0.005],[-0.13,-1.566],[-0.008,-0.64]],"v":[[0,0.51],[0.479,0],[0.989,0.479],[1.026,2.453],[1.186,6.591],[2.575,10.699],[2.424,11.381],[1.742,11.23],[0.197,6.672],[0.038,2.461]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 9","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":45,"ty":4,"nm":"Path 8","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-5.148,-23.082,0],"ix":2},"a":{"a":0,"k":[1.326,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-0.021,0.663],[-0.272,-0.009],[0.009,-0.273],[0.007,-0.64],[0.131,-1.567],[0.004,-0.006],[0.231,0.147],[-0.147,0.231],[-0.187,2.243],[-0.015,1.27]],"o":[[0.009,-0.273],[0.274,0.01],[-0.022,0.675],[-0.015,1.311],[-0.206,2.484],[-0.146,0.23],[-0.229,-0.147],[0.003,-0.005],[0.131,-1.578],[0.007,-0.657]],"v":[[1.664,0.479],[2.173,0],[2.652,0.51],[2.616,2.461],[2.455,6.672],[0.911,11.23],[0.228,11.381],[0.078,10.699],[1.467,6.591],[1.628,2.453]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 8","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":46,"ty":4,"nm":"Path 7","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-9.546,-23.87,0],"ix":2},"a":{"a":0,"k":[1.326,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-0.021,0.663],[-0.273,-0.009],[0.01,-0.272],[0.008,-0.64],[0.131,-1.568],[0.003,-0.006],[0.23,0.146],[-0.147,0.229],[-0.186,2.243],[-0.015,1.268]],"o":[[0.009,-0.273],[0.273,0.009],[-0.021,0.675],[-0.014,1.311],[-0.207,2.483],[-0.147,0.23],[-0.23,-0.148],[0.002,-0.006],[0.132,-1.579],[0.007,-0.658]],"v":[[1.663,0.478],[2.173,0],[2.651,0.509],[2.615,2.46],[2.455,6.672],[0.911,11.229],[0.228,11.381],[0.078,10.699],[1.466,6.59],[1.627,2.453]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 7","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":47,"ty":4,"nm":"Path 6","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-13.814,-24.657,0],"ix":2},"a":{"a":0,"k":[1.326,5.729,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-0.021,0.663],[-0.273,-0.009],[0.009,-0.273],[0.007,-0.641],[0.131,-1.567],[0.004,-0.006],[0.231,0.147],[-0.147,0.23],[-0.187,2.243],[-0.015,1.269]],"o":[[0.009,-0.272],[0.273,0.008],[-0.022,0.676],[-0.015,1.311],[-0.206,2.483],[-0.147,0.231],[-0.229,-0.148],[0.003,-0.005],[0.131,-1.579],[0.007,-0.658]],"v":[[1.664,0.478],[2.174,0],[2.652,0.509],[2.616,2.461],[2.455,6.672],[0.911,11.229],[0.228,11.381],[0.078,10.698],[1.467,6.59],[1.628,2.453]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 6","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":48,"ty":4,"nm":"Path 5","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-17.884,-26.102,0],"ix":2},"a":{"a":0,"k":[1.326,5.73,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-0.021,0.663],[-0.273,-0.008],[0.009,-0.273],[0.007,-0.64],[0.131,-1.566],[0.004,-0.005],[0.231,0.148],[-0.147,0.23],[-0.187,2.243],[-0.015,1.27]],"o":[[0.008,-0.273],[0.274,0.009],[-0.022,0.676],[-0.015,1.312],[-0.207,2.484],[-0.147,0.23],[-0.229,-0.146],[0.003,-0.005],[0.131,-1.579],[0.007,-0.658]],"v":[[1.664,0.479],[2.173,0],[2.652,0.51],[2.616,2.461],[2.455,6.672],[0.911,11.23],[0.228,11.381],[0.078,10.699],[1.467,6.591],[1.627,2.453]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 5","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":49,"ty":4,"nm":"Path 4","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[51.113,33.607,0],"ix":2},"a":{"a":0,"k":[0.833,11.012,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-0.409,-0.003],[0.004,-0.41],[0,0],[0.41,0.002],[-0.003,0.41]],"o":[[0.003,-0.41],[0.41,0.004],[0,0],[-0.004,0.41],[-0.409,-0.003],[0,0]],"v":[[0.183,0.736],[0.93,0],[1.666,0.748],[1.484,21.286],[0.736,22.023],[0,21.275]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.219607843137,0.207843137255,0.274509803922,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 4","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":50,"ty":4,"nm":"Path 3","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-51.113,33.607,0],"ix":2},"a":{"a":0,"k":[0.833,11.012,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-0.409,-0.003],[0.003,-0.41],[0,0],[0.41,0.002],[-0.002,0.41]],"o":[[0.003,-0.41],[0.41,0.004],[0,0],[-0.004,0.41],[-0.409,-0.003],[0,0]],"v":[[0.183,0.736],[0.93,0],[1.666,0.748],[1.484,21.286],[0.736,22.023],[0,21.275]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.219607843137,0.207843137255,0.274509803922,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 3","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":51,"ty":4,"nm":"Path 2","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-0.02,-25.285,0],"ix":2},"a":{"a":0,"k":[21.781,8.502,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[12.202,5.228],[-0.001,-0.917],[0.665,-2.521],[-1.359,-0.528],[-6.844,-0.137],[-7.013,2.725],[0.702,2.663],[-0.002,0.993],[0.508,-0.218]],"o":[[-0.507,-0.218],[0.002,0.993],[-0.702,2.663],[6.254,2.43],[7.676,0.157],[1.359,-0.528],[-0.665,-2.521],[0.002,-0.917],[-12.202,5.228]],"v":[[2.69,0.115],[0.882,0.832],[1.147,7.76],[0.624,13.14],[20.534,16.992],[42.937,13.14],[42.414,7.76],[42.679,0.832],[40.871,0.115]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.403921568627,0.38431372549,0.494117647059,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 2","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":52,"ty":4,"nm":"Path 1","parent":39,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,-0.372,0],"ix":2},"a":{"a":0,"k":[71.002,44.247,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[-23.98,7.863],[0,0],[0,0],[0,0],[-1.946,-10.127],[0.822,-36.297]],"o":[[0,0],[-0.821,-36.297],[1.945,-10.127],[0,0],[0,0],[0,0],[23.979,7.863],[0,0]],"v":[[71.002,88.494],[0.018,88.494],[51.105,23.262],[52.553,0],[71.002,0],[89.452,0],[90.901,23.262],[141.986,88.494]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.345098039216,0.333333333333,0.423529411765,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Path 1","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":53,"ty":4,"nm":"Background","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,6.576,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"rc","d":1,"s":{"a":0,"k":[172.448,172.447],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false}],"ip":0,"op":600,"st":0,"bm":0},{"ddd":0,"ind":54,"ty":4,"nm":"Rectangle 1","parent":53,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[86.224,86.224,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[-16.205,0],[0,0],[0,-16.205],[0,0],[16.204,0],[0,0],[0,16.205]],"o":[[0,-16.205],[0,0],[16.205,0],[0,0],[0,16.204],[0,0],[-16.205,0],[0,0]],"v":[[0,29.342],[29.342,0],[143.106,0],[172.448,29.342],[172.448,143.106],[143.107,172.447],[29.342,172.447],[0,143.105]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.956862745098,0.36862745098,0.160784313725,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Rectangle 1","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":600,"st":0,"bm":0}],"markers":[]};
 
-            recognition.onend = () => {
-                document.getElementById('mic-btn').innerText = "🎤 Tocca e Parla";
-                document.getElementById('mic-btn').style.background = "var(--pink)";
-            };
+// ── LOTTIE ──
+let animWelcome, animTopics, animChat;
+window.addEventListener("load", () => {
+  const cfg = { renderer:"svg", loop:true, autoplay:true, animationData:LOTTIE_DATA };
+  animWelcome = lottie.loadAnimation({...cfg, container:document.getElementById("lottie-welcome")});
+  animTopics  = lottie.loadAnimation({...cfg, container:document.getElementById("lottie-topics")});
+  animChat    = lottie.loadAnimation({...cfg, container:document.getElementById("lottie-chat")});
+  renderCalendar();
+});
 
-            recognition.start();
-        }
-    </script>
+// ── SCREENS ──
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if (id === "screen-verbquiz") startVerbQuiz();
+  if (id === "screen-vocabquiz") startVocabQuiz();
+  if (id === "screen-grammarquiz") startGrammarQuiz();
+  if (id === "screen-reading") startReading();
+}
+
+// ── TOPICS ──
+const TOPICS = [
+  {emoji:"👨‍👩‍👧",label:"Mi Familia",  bg:"#fef9ee",border:"#fcd34d",prompt:"Empieza la conversación. Saluda y pregunta: ¿cuántas personas hay en tu familia? Usa español A2 sencillo."},
+  {emoji:"🏠",    label:"Mi Casa",    bg:"#eff6ff",border:"#93c5fd",prompt:"Empieza. Saluda y pregunta: ¿vives en una casa o en un piso? Usa español A2 sencillo."},
+  {emoji:"🐾",    label:"Animales",   bg:"#f0fdf4",border:"#86efac",prompt:"Empieza. Saluda y pregunta: ¿tienes alguna mascota? Usa español A2 sencillo."},
+  {emoji:"🍕",    label:"Comida",     bg:"#fff7ed",border:"#fdba74",prompt:"Empieza. Saluda y pregunta: ¿cuál es tu comida favorita? Usa español A2 sencillo."},
+  {emoji:"🏫",    label:"El Colegio", bg:"#fdf4ff",border:"#d8b4fe",prompt:"Empieza. Saluda y pregunta: ¿cuál es tu asignatura favorita? Usa español A2 sencillo."},
+  {emoji:"🌤️",   label:"El Tiempo",  bg:"#ecfeff",border:"#67e8f9",prompt:"Empieza. Saluda y pregunta: ¿qué tiempo hace hoy? Usa español A2 sencillo."},
+  {emoji:"⚽",    label:"Deportes",   bg:"#f7fee7",border:"#a3e635",prompt:"Empieza. Saluda y pregunta: ¿practicas algún deporte? Usa español A2 sencillo."},
+  {emoji:"👫",    label:"Amigos",     bg:"#fefce8",border:"#fde047",prompt:"Empieza. Saluda y pregunta: háblame de tu mejor amigo/a. Usa español A2 sencillo."},
+  {emoji:"🛍️",   label:"De compras", bg:"#fdf2f8",border:"#f9a8d4",prompt:"Empieza. Saluda y pregunta: ¿te gusta ir de compras? Usa español A2 sencillo."},
+  {emoji:"🎬",    label:"El Cine",    bg:"#eef2ff",border:"#a5b4fc",prompt:"Empieza. Saluda y pregunta: ¿cuál es tu película favorita? Usa español A2 sencillo."},
+  {emoji:"🏖️",   label:"Vacaciones", bg:"#f0fdfa",border:"#5eead4",prompt:"Empieza. Saluda y pregunta: ¿dónde pasaste las últimas vacaciones? Usa español A2 sencillo."},
+  {emoji:"🎵",    label:"Música",     bg:"#fff1f2",border:"#fda4af",prompt:"Empieza. Saluda y pregunta: ¿qué tipo de música te gusta? Usa español A2 sencillo."},
+];
+
+const grid = document.getElementById("topic-grid");
+TOPICS.forEach(t => {
+  const btn = document.createElement("button");
+  btn.className = "topic-btn";
+  btn.style.background = t.bg;
+  btn.style.borderColor = t.border;
+  btn.innerHTML = `<span style="font-size:26px">${t.emoji}</span><span class="tlabel">${t.label}</span>`;
+  btn.onclick = () => startChat(t);
+  grid.appendChild(btn);
+});
+
+// ── SYSTEM PROMPT ──
+const SYSTEM_PROMPT = `Eres Miguel, un profesor de español simpático, paciente y animado para estudiantes jóvenes de nivel A2 (10-14 años).
+
+PERSONALIDAD: Paciente, divertido, usa palabras simples, siempre amable y positivo.
+
+REGLAS ESTRICTAS DE IDIOMA:
+- Solo vocabulario A2. Frases cortas (máx 12 palabras).
+- Máximo 3 frases por respuesta.
+- Haz exactamente UNA pregunta simple al final de cada respuesta.
+- Nunca digas "incorrecto" o "error". Corrige naturalmente incluyendo la forma correcta en tu respuesta.
+- Añade siempre un ánimo corto: "¡Muy bien!", "¡Perfecto!", "¡Genial!", "¡Excelente!".
+- Usa 1-2 emojis por respuesta.
+
+REGLA DE CORRECCIÓN: Si el estudiante comete un error gramatical, añade al final de tu respuesta en una línea nueva: "💡 ¿Querías decir: [versión correcta]?"
+
+REGLA DE TEMA: Solo habla del tema elegido y de la práctica del español. Si cambia de tema, responde: "¡Sigamos practicando español! 😊" y redirige.`;
+
+// ── CHAT STATE ──
+let messages = [], currentTopic = null, loading = false;
+
+async function startChat(t) {
+  currentTopic = t; messages = [];
+  document.getElementById("msg-col").innerHTML = "";
+  document.getElementById("chat-title").textContent = t.emoji + " " + t.label;
+  showScreen("screen-chat");
+  await fetchMiguel([{ role:"user", content:t.prompt }]);
+}
+
+async function fetchMiguel(history) {
+  setLoading(true); addTyping();
+  try {
+    const res = await fetch("/api/chat", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, system:SYSTEM_PROMPT, messages:history })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || "¿Puedes repetir? 😊";
+    removeTyping();
+    addMiguelBubble(text);
+    messages.push({ role:"assistant", content:text });
+  } catch(e) { removeTyping(); addMiguelBubble("¡Ups! Algo fue mal. ¡Inténtalo de nuevo! 😊"); }
+  setLoading(false);
+}
+
+function setLoading(val) {
+  loading = val;
+  document.getElementById("send-btn").disabled = val || !document.getElementById("chat-input").value.trim();
+  document.getElementById("chat-sp1").style.display   = val ? "none" : "";
+  document.getElementById("think-chat").style.display = val ? "" : "none";
+  document.getElementById("miguel-chat-wrap").style.animation = val ? "none" : "float 3s ease-in-out infinite";
+  if (animChat) animChat.setSpeed(val ? 0.4 : 1);
+}
+
+// ── MIGUEL BUBBLE with clickable words ──
+function addMiguelBubble(text) {
+  const col = document.getElementById("msg-col");
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "display:flex;justify-content:flex-start;";
+  const b = document.createElement("div");
+  b.className = "bubble-miguel";
+  // make each word clickable
+  b.innerHTML = text.split(/(\s+)/).map(token => {
+    const word = token.trim().replace(/[¿¡.,!?;:"""()]/g, "");
+    if (!word) return token;
+    return `<span class="word-span" onclick="translateWord(this, '${word.replace(/'/g,"\'")}')">${token}</span>`;
+  }).join("");
+  wrap.appendChild(b);
+  col.appendChild(wrap);
+  col.scrollTop = col.scrollHeight;
+  speak(text);
+  savePracticeDay();
+}
+
+function addUserBubble(text) {
+  const col = document.getElementById("msg-col");
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "display:flex;justify-content:flex-end;";
+  const b = document.createElement("div");
+  b.className = "bubble-user";
+  b.textContent = text;
+  wrap.appendChild(b);
+  col.appendChild(wrap);
+  col.scrollTop = col.scrollHeight;
+}
+
+// ── WORD TRANSLATION ──
+async function translateWord(el, word) {
+  // toggle off if already showing
+  const existing = el.querySelector(".word-tooltip");
+  if (existing) { existing.remove(); return; }
+  // remove other tooltips
+  document.querySelectorAll(".word-tooltip").forEach(t => t.remove());
+  const tip = document.createElement("span");
+  tip.className = "word-tooltip";
+  tip.textContent = "…";
+  el.appendChild(tip);
+  try {
+    const res = await fetch("/api/chat", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model:"claude-sonnet-4-20250514", max_tokens:60,
+        messages:[{ role:"user", content:`Traduci in italiano questa parola spagnola: "${word}". Rispondi SOLO con la traduzione italiana, nient'altro.` }]
+      })
+    });
+    const data = await res.json();
+    tip.textContent = data.content?.[0]?.text?.trim() || "?";
+  } catch(e) { tip.textContent = "?"; }
+}
+
+let typingEl = null;
+function addTyping() {
+  const col = document.getElementById("msg-col");
+  typingEl = document.createElement("div");
+  typingEl.className = "bubble-miguel typing";
+  typingEl.textContent = "•••";
+  col.appendChild(typingEl);
+  col.scrollTop = col.scrollHeight;
+}
+function removeTyping() { if (typingEl) { typingEl.remove(); typingEl = null; } }
+
+async function sendMsg() {
+  const input = document.getElementById("chat-input");
+  const text = input.value.trim();
+  if (!text || loading) return;
+  input.value = "";
+  document.getElementById("send-btn").disabled = true;
+  messages.push({ role:"user", content:text });
+  addUserBubble(text);
+  const history = [
+    { role:"user", content:currentTopic.prompt },
+    { role:"assistant", content:messages[0]?.content || "" },
+    ...messages.slice(1),
+  ];
+  await fetchMiguel(history);
+}
+
+function handleKey(e) {
+  if (e.key === "Enter") sendMsg();
+  document.getElementById("send-btn").disabled = !e.target.value.trim() || loading;
+}
+document.getElementById("chat-input").addEventListener("input", e => {
+  document.getElementById("send-btn").disabled = !e.target.value.trim() || loading;
+});
+
+// ── AUDIO UNLOCK ──
+let audioUnlocked = false;
+function unlockAudio() {
+  audioUnlocked = true;
+  document.getElementById("sound-banner").style.display = "none";
+  const u = new SpeechSynthesisUtterance(""); window.speechSynthesis.speak(u);
+}
+
+// ── SPEECH SYNTHESIS — Miguel speaks (male Spanish voice) ──
+function speak(text) {
+  if (!audioUnlocked || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/[^\x00-\xFF]/g, " ").replace(/\s+/g," ").trim();
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.lang = "es-ES"; utt.rate = 0.88; utt.pitch = 0.9;
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith("es") && /male|jorge|diego|miguel|carlos|alvaro/i.test(v.name))
+    || voices.find(v => v.lang.startsWith("es"));
+  if (voice) utt.voice = voice;
+  utt.onstart = () => { if(animChat) animChat.setSpeed(1.5); };
+  utt.onend   = () => { if(animChat) animChat.setSpeed(1); };
+  window.speechSynthesis.speak(utt);
+}
+window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+
+// ── SPEECH RECOGNITION ──
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null, isListening = false;
+if (SR) {
+  recognition = new SR();
+  recognition.lang = "es-ES";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.onresult = e => {
+    document.getElementById("chat-input").value = e.results[0][0].transcript;
+    document.getElementById("send-btn").disabled = false;
+    stopListening();
+    setTimeout(sendMsg, 500);
+  };
+  recognition.onerror = () => stopListening();
+  recognition.onend   = () => stopListening();
+}
+
+function toggleMic() {
+  if (!recognition) { alert("Voce non supportata. Usa Chrome!"); return; }
+  if (isListening) stopListening(); else startListening();
+}
+function startListening() {
+  isListening = true;
+  document.getElementById("mic-btn").classList.add("listening");
+  document.getElementById("mic-btn").textContent = "⏹";
+  document.getElementById("chat-input").placeholder = "Ascoltando… 👂";
+  recognition.start();
+}
+function stopListening() {
+  isListening = false;
+  document.getElementById("mic-btn").classList.remove("listening");
+  document.getElementById("mic-btn").textContent = "🎤";
+  document.getElementById("chat-input").placeholder = "Scrivi o parla in spagnolo… 🇪🇸";
+  try { recognition.stop(); } catch(e) {}
+}
+
+// ── CALENDAR ──
+let calYear, calMonth;
+const PRACTICED_KEY = "miguel_practiced";
+function getPracticedDays() { try { return JSON.parse(localStorage.getItem(PRACTICED_KEY)||"[]"); } catch(e) { return []; } }
+function savePracticeDay() {
+  const days = getPracticedDays(), today = new Date().toISOString().slice(0,10);
+  if (!days.includes(today)) { days.push(today); localStorage.setItem(PRACTICED_KEY, JSON.stringify(days)); renderCalendar(); }
+}
+function renderCalendar() {
+  const now = new Date();
+  if (calYear === undefined) { calYear = now.getFullYear(); calMonth = now.getMonth(); }
+  const days = getPracticedDays(), todayStr = now.toISOString().slice(0,10);
+  const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  document.getElementById("cal-title").textContent = months[calMonth] + " " + calYear;
+  const grid = document.getElementById("cal-grid");
+  grid.innerHTML = "";
+  ["Lu","Ma","Mi","Ju","Vi","Sá","Do"].forEach(d => {
+    const el = document.createElement("div"); el.className = "cal-dayname"; el.textContent = d; grid.appendChild(el);
+  });
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const offset = (firstDay + 6) % 7;
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  for (let i=0; i<offset; i++) { const el=document.createElement("div"); el.className="cal-day empty"; grid.appendChild(el); }
+  for (let d=1; d<=daysInMonth; d++) {
+    const el = document.createElement("div"); el.className = "cal-day"; el.textContent = d;
+    const ds = calYear+"-"+String(calMonth+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+    if (days.includes(ds)) el.classList.add("practiced");
+    if (ds === todayStr) el.classList.add("today");
+    grid.appendChild(el);
+  }
+  let streak=0; const check=new Date();
+  while(true) { const s=check.toISOString().slice(0,10); if(days.includes(s)){streak++;check.setDate(check.getDate()-1);}else break; }
+  const sEl=document.getElementById("cal-streak");
+  sEl.textContent = streak>0 ? "🔥 "+streak+" días seguidos! ¡Sigue así!" : "¡Empieza tu racha hoy! 💪";
+}
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
+
+// ── IRREGULAR VERBS QUIZ ──
+const VERBS = [
+  {inf:"ser",     ps:"fui/fuiste/fue/fuimos/fuisteis/fueron",   pp:"sido"},
+  {inf:"estar",   ps:"estuve/estuviste/estuvo",                  pp:"estado"},
+  {inf:"tener",   ps:"tuve/tuviste/tuvo",                        pp:"tenido"},
+  {inf:"ir",      ps:"fui/fuiste/fue",                           pp:"ido"},
+  {inf:"hacer",   ps:"hice/hiciste/hizo",                        pp:"hecho"},
+  {inf:"poder",   ps:"pude/pudiste/pudo",                        pp:"podido"},
+  {inf:"querer",  ps:"quise/quisiste/quiso",                     pp:"querido"},
+  {inf:"saber",   ps:"supe/supiste/supo",                        pp:"sabido"},
+  {inf:"venir",   ps:"vine/viniste/vino",                        pp:"venido"},
+  {inf:"decir",   ps:"dije/dijiste/dijo",                        pp:"dicho"},
+  {inf:"poner",   ps:"puse/pusiste/puso",                        pp:"puesto"},
+  {inf:"traer",   ps:"traje/trajiste/trajo",                     pp:"traído"},
+  {inf:"ver",     ps:"vi/viste/vio",                             pp:"visto"},
+  {inf:"dar",     ps:"di/diste/dio",                             pp:"dado"},
+  {inf:"salir",   ps:"salí/saliste/salió",                       pp:"salido"},
+  {inf:"leer",    ps:"leí/leíste/leyó",                          pp:"leído"},
+  {inf:"dormir",  ps:"dormí/dormiste/durmió",                    pp:"dormido"},
+  {inf:"pedir",   ps:"pedí/pediste/pidió",                       pp:"pedido"},
+  {inf:"jugar",   ps:"jugué/jugaste/jugó",                       pp:"jugado"},
+  {inf:"escribir",ps:"escribí/escribiste/escribió",              pp:"escrito"},
+];
+let vQ=[],vIdx=0,vScore=0,vWrong=[],vAnswered=false;
+function startVerbQuiz(){vQ=[...VERBS].sort(()=>Math.random()-0.5).slice(0,15);vIdx=0;vScore=0;vWrong=[];showVerbQ();}
+function showVerbQ(){
+  vAnswered=false;
+  const v=vQ[vIdx],total=vQ.length;
+  document.getElementById("verb-counter").textContent=(vIdx+1)+" / "+total;
+  const pct=(vIdx/total*100)+"%";
+  // show first form of ps as placeholder hint
+  const psFirst = v.ps.split("/")[0];
+  document.getElementById("verb-body").innerHTML=`
+    <div class="quiz-progress" style="width:100%;max-width:440px;"><div class="quiz-progress-bar" style="width:${pct}"></div></div>
+    <div class="quiz-card" style="max-width:440px;">
+      <div class="quiz-label">Completa las 3 formas</div>
+      <div style="font-size:12px;color:#9ca3af;margin-bottom:10px;">Pretérito Indefinido (yo) · Participio</div>
+      <div class="verb-grid">
+        <div class="verb-col-head">Infinitivo</div>
+        <div class="verb-col-head">Pret. Indefinido (yo)</div>
+        <div class="verb-col-head">Participio</div>
+        <div class="verb-base">${v.inf}</div>
+        <div><input class="verb-input" id="v-ps" placeholder="yo…" autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="verbKey(event)"/><div class="verb-answer" id="ans-ps"></div></div>
+        <div><input class="verb-input" id="v-pp" placeholder="…" autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="verbKey(event)"/><div class="verb-answer" id="ans-pp"></div></div>
+      </div>
+    </div>
+    <button class="quiz-btn" id="verb-btn" onclick="checkVerb()">Comprobar ✓</button>`;
+  setTimeout(()=>{const i=document.getElementById("v-ps");if(i)i.focus();},100);
+}
+function verbKey(e){if(e.key==="Enter"){if(!vAnswered)checkVerb();else nextVerb();}}
+function checkVerb(){
+  if(vAnswered)return; vAnswered=true;
+  const v=vQ[vIdx];
+  const psVal=document.getElementById("v-ps").value.trim().toLowerCase();
+  const ppVal=document.getElementById("v-pp").value.trim().toLowerCase();
+  const psOk=v.ps.split("/").includes(psVal);
+  const ppOk=v.pp.split("/").includes(ppVal);
+  const psEl=document.getElementById("v-ps"),ppEl=document.getElementById("v-pp");
+  const apsEl=document.getElementById("ans-ps"),appEl=document.getElementById("ans-pp");
+  if(psOk){psEl.classList.add("correct");apsEl.textContent="✅";}
+  else{psEl.classList.add("wrong");apsEl.textContent="→ "+v.ps.split("/")[0];apsEl.style.color="#dc2626";}
+  if(ppOk){ppEl.classList.add("correct");appEl.textContent="✅";}
+  else{ppEl.classList.add("wrong");appEl.textContent="→ "+v.pp;appEl.style.color="#dc2626";}
+  if(psOk&&ppOk)vScore++;else vWrong.push(v);
+  const btn=document.getElementById("verb-btn");
+  btn.textContent=vIdx<vQ.length-1?"Siguiente →":"Resultados 🏆";btn.onclick=nextVerb;
+}
+function nextVerb(){vIdx++;if(vIdx>=vQ.length)showVerbResults();else showVerbQ();}
+function showVerbResults(){
+  const total=vQ.length,pct=Math.round(vScore/total*100);
+  const emoji=pct===100?"🏆":pct>=70?"🌟":pct>=40?"💪":"📚";
+  let wHTML="";
+  if(vWrong.length>0){wHTML="<div class='quiz-wrong-list'><b style='font-size:13px;color:#6b7280;'>Para repasar:</b>";vWrong.forEach(v=>{wHTML+=`<div class="quiz-wrong-item">${v.inf} → yo <b>${v.ps.split("/")[0]}</b> · pp: <b>${v.pp}</b></div>`;});wHTML+="</div>";}
+  document.getElementById("verb-counter").textContent="";
+  document.getElementById("verb-body").innerHTML=`<div class="quiz-score-card"><div style="font-size:48px">${emoji}</div><div class="quiz-score-big">${vScore}/${total}</div><div class="quiz-score-label">${pct>=70?"¡Muy bien!":"¡Sigue practicando!"} (${pct}%)</div>${wHTML}</div><button class="quiz-btn" onclick="startVerbQuiz()">🔄 Reiniciar</button><button class="quiz-btn sec" onclick="showScreen('screen-topics')" style="margin-top:8px;">← Temas</button>`;
+  savePracticeDay();
+}
+
+// ── VOCABULARY QUIZ ──
+const VOCAB = [
+  {es:"la casa",          it:"la casa"},
+  {es:"el piso",          it:"l'appartamento"},
+  {es:"la cocina",        it:"la cucina"},
+  {es:"el dormitorio",    it:"la camera da letto"},
+  {es:"el cuarto de baño",it:"il bagno"},
+  {es:"el salón",         it:"il salotto"},
+  {es:"la ventana",       it:"la finestra"},
+  {es:"la puerta",        it:"la porta"},
+  {es:"la mesa",          it:"il tavolo"},
+  {es:"la silla",         it:"la sedia"},
+  {es:"el libro",         it:"il libro"},
+  {es:"el colegio",       it:"la scuola"},
+  {es:"el profesor",      it:"il professore"},
+  {es:"el examen",        it:"l'esame"},
+  {es:"los deberes",      it:"i compiti"},
+  {es:"el recreo",        it:"l'intervallo"},
+  {es:"la biblioteca",    it:"la biblioteca"},
+  {es:"el uniforme",      it:"l'uniforme"},
+  {es:"la mochila",       it:"lo zaino"},
+  {es:"el bolígrafo",     it:"la penna"},
+  {es:"el cuaderno",      it:"il quaderno"},
+  {es:"la pizarra",       it:"la lavagna"},
+  {es:"la familia",       it:"la famiglia"},
+  {es:"los padres",       it:"i genitori"},
+  {es:"el hermano",       it:"il fratello"},
+  {es:"la hermana",       it:"la sorella"},
+  {es:"los abuelos",      it:"i nonni"},
+  {es:"el perro",         it:"il cane"},
+  {es:"el gato",          it:"il gatto"},
+  {es:"el desayuno",      it:"la colazione"},
+  {es:"la comida",        it:"il pranzo"},
+  {es:"la cena",          it:"la cena"},
+  {es:"el agua",          it:"l'acqua"},
+  {es:"el zumo",          it:"il succo"},
+  {es:"el pan",           it:"il pane"},
+];
+let vbQ=[],vbIdx=0,vbScore=0,vbWrong=[],vbAnswered=false;
+function startVocabQuiz(){vbQ=[...VOCAB].sort(()=>Math.random()-0.5).slice(0,20);vbIdx=0;vbScore=0;vbWrong=[];showVocabQ();}
+function showVocabQ(){
+  vbAnswered=false;
+  const w=vbQ[vbIdx],total=vbQ.length;
+  document.getElementById("vocab-counter").textContent=(vbIdx+1)+" / "+total;
+  const pct=(vbIdx/total*100)+"%";
+  document.getElementById("vocab-body").innerHTML=`
+    <div class="quiz-progress" style="width:100%;max-width:400px;"><div class="quiz-progress-bar" style="width:${pct}"></div></div>
+    <div class="quiz-card">
+      <div class="quiz-label">¿Cómo se dice en italiano?</div>
+      <div class="quiz-word">${w.es}</div>
+      <div class="quiz-hint">Scrivi la traduzione in italiano</div>
+      <input class="quiz-input" id="vocab-input" type="text" placeholder="…" autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="vocabKey(event)"/>
+      <div class="quiz-feedback" id="vocab-feedback"></div>
+    </div>
+    <button class="quiz-btn" id="vocab-btn" onclick="checkVocab()">Comprobar ✓</button>`;
+  setTimeout(()=>{const i=document.getElementById("vocab-input");if(i)i.focus();},100);
+}
+function vocabKey(e){if(e.key==="Enter"){if(!vbAnswered)checkVocab();else nextVocab();}}
+function checkVocab(){
+  if(vbAnswered)return; vbAnswered=true;
+  const w=vbQ[vbIdx];
+  const val=document.getElementById("vocab-input").value.trim().toLowerCase();
+  const correct=w.it.toLowerCase();
+  const alts=correct.split("/").map(x=>x.trim().replace(/^(il |la |l'|i |le |lo )/,""));
+  const valClean=val.replace(/^(il |la |l'|i |le |lo )/,"");
+  const ok=alts.includes(valClean)||correct===val;
+  const inp=document.getElementById("vocab-input"),fb=document.getElementById("vocab-feedback"),btn=document.getElementById("vocab-btn");
+  if(ok){vbScore++;inp.classList.add("correct");fb.className="quiz-feedback correct";fb.textContent="✅ ¡Correcto!";}
+  else{vbWrong.push(w);inp.classList.add("wrong");fb.className="quiz-feedback wrong";fb.innerHTML="❌ Risposta: <b>"+w.it+"</b>";}
+  btn.textContent=vbIdx<vbQ.length-1?"Siguiente →":"Resultados 🏆";btn.onclick=nextVocab;
+}
+function nextVocab(){vbIdx++;if(vbIdx>=vbQ.length)showVocabResults();else showVocabQ();}
+function showVocabResults(){
+  const total=vbQ.length,pct=Math.round(vbScore/total*100);
+  const emoji=pct===100?"🏆":pct>=70?"🌟":pct>=40?"💪":"📚";
+  let wHTML="";
+  if(vbWrong.length>0){wHTML="<div class='quiz-wrong-list'><b style='font-size:13px;color:#6b7280;'>Da ripassare:</b>";vbWrong.forEach(w=>{wHTML+=`<div class="quiz-wrong-item">${w.es} → <b>${w.it}</b></div>`;});wHTML+="</div>";}
+  document.getElementById("vocab-counter").textContent="";
+  document.getElementById("vocab-body").innerHTML=`<div class="quiz-score-card"><div style="font-size:48px">${emoji}</div><div class="quiz-score-big">${vbScore}/${total}</div><div class="quiz-score-label">${pct>=70?"¡Muy bien!":"¡Sigue practicando!"} (${pct}%)</div>${wHTML}</div><button class="quiz-btn" onclick="startVocabQuiz()">🔄 Reiniciar</button><button class="quiz-btn sec" onclick="showScreen('screen-topics')" style="margin-top:8px;">← Temas</button>`;
+  savePracticeDay();
+}
+
+// ── GRAMMAR QUIZ ──
+const GRAMMAR=[
+  {type:"mc",topic:"Ser / Estar",question:"'Yo ___ estudiante.' ¿Qué verbo?",options:["estoy","soy","tengo","hay"],correct:1,explanation:"SER = identidad permanente (profesión, nacionalidad)"},
+  {type:"mc",topic:"Ser / Estar",question:"'Ella ___ cansada hoy.'",options:["es","tiene","está","hay"],correct:2,explanation:"ESTAR = estado temporal"},
+  {type:"mc",topic:"Ser / Estar",question:"'Madrid ___ en España.'",options:["está","es","tiene","hay"],correct:0,explanation:"ESTAR = ubicación de lugares"},
+  {type:"fill",topic:"Presente — regular -ar",before:"Yo",blank:"hablo",after:"español todos los días.",hint:"hablar → yo ?"},
+  {type:"fill",topic:"Presente — regular -er",before:"Ella",blank:"come",after:"pizza los viernes.",hint:"comer → ella ?"},
+  {type:"fill",topic:"Presente — irregular",before:"Yo no",blank:"sé",after:"la respuesta.",hint:"saber → yo ?"},
+  {type:"mc",topic:"Pretérito Indefinido",question:"'Ayer yo ___ al colegio en autobús.'",options:["voy","fui","iba","he ido"],correct:1,explanation:"Pret. Indefinido = acción pasada completa"},
+  {type:"mc",topic:"Pretérito Indefinido",question:"'El año pasado nosotros ___ a Madrid.'",options:["vamos","fuimos","íbamos","hemos ido"],correct:1,explanation:"ir → fui, fuiste, fue, fuimos, fuisteis, fueron"},
+  {type:"fill",topic:"Pretérito Indefinido",before:"Ella",blank:"comió",after:"una pizza anoche.",hint:"comer → ella (pasado)"},
+  {type:"mc",topic:"Interrogativos",question:"'___ es tu asignatura favorita?'",options:["Quién","Cuándo","Cuál","Cómo"],correct:2,explanation:"CUÁL = which/qual (para elegir entre opciones)"},
+  {type:"mc",topic:"Interrogativos",question:"'___ vives tú?'",options:["Qué","Dónde","Cuándo","Cómo"],correct:1,explanation:"DÓNDE = dove"},
+  {type:"mc",topic:"Negación",question:"Forma negativa de 'Yo como carne.'",options:["Yo no como carne.","Yo nunca como carne.","Yo no comer carne.","Yo no comgo carne."],correct:0,explanation:"NO va siempre antes del verbo"},
+  {type:"fill",topic:"Gustar",before:"A mí me",blank:"gusta",after:"mucho la música.",hint:"gustar → singolare"},
+  {type:"mc",topic:"Gustar",question:"'A ellos ___ los deportes.'",options:["gusta","gustan","gusto","gustas"],correct:1,explanation:"GUSTAN perché 'los deportes' è plurale"},
+  {type:"mc",topic:"Hay / Está",question:"'___ un mercado cerca de mi casa.'",options:["Está","Es","Hay","Tiene"],correct:2,explanation:"HAY = esiste/c'è. ESTÁ = dov'è (posizione)"},
+  {type:"mc",topic:"Artículos",question:"'___ libro está encima de la mesa.'",options:["Un","Una","El","La"],correct:2,explanation:"EL = articolo determinativo maschile singolare"},
+  {type:"fill",topic:"Reflexivos",before:"Yo me",blank:"levanto",after:"a las siete de la mañana.",hint:"levantarse → yo ?"},
+  {type:"mc",topic:"Tiempo futuro",question:"'Mañana yo ___ al gimnasio.'",options:["voy","iré","fui","iba"],correct:1,explanation:"Futuro simple: ir → iré, irás, irá…"},
+];
+let gQ=[],gIdx=0,gScore=0,gWrong=[],gAnswered=false;
+function startGrammarQuiz(){gQ=[...GRAMMAR].sort(()=>Math.random()-0.5);gIdx=0;gScore=0;gWrong=[];showGramQ();}
+function showGramQ(){
+  gAnswered=false;
+  const q=gQ[gIdx],total=gQ.length;
+  document.getElementById("grammar-counter").textContent=(gIdx+1)+" / "+total;
+  const pct=(gIdx/total*100)+"%";
+  let bHTML=`<div class="quiz-progress" style="width:100%;max-width:440px;"><div class="quiz-progress-bar" style="width:${pct}"></div></div><div class="quiz-card" style="max-width:440px;text-align:left;"><div class="grammar-type">${q.topic}</div>`;
+  if(q.type==="mc"){
+    bHTML+=`<div class="grammar-question">${q.question}</div><div class="mc-options">`;
+    q.options.forEach((opt,i)=>{bHTML+=`<button class="mc-btn" id="gmc-${i}" onclick="checkGram(${i})">${opt}</button>`;});
+    bHTML+=`</div>`;
+  }else{
+    bHTML+=`<div class="grammar-question">Completa la frase: <span style="color:#9ca3af;font-size:13px;">(${q.hint})</span></div><div class="fill-row"><span>${q.before}</span><input class="fill-input" id="g-fill" placeholder="…" autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="gramKey(event)" style="width:120px;"/><span>${q.after}</span></div>`;
+  }
+  bHTML+=`<div class="grammar-feedback" id="g-feedback"></div><div class="grammar-explanation" id="g-explanation"></div></div><button class="quiz-btn" id="g-btn" onclick="${q.type==="mc"?"":"checkGramFill()"}">Comprobar ✓</button>`;
+  document.getElementById("grammar-body").innerHTML=bHTML;
+  if(q.type==="fill")setTimeout(()=>{const i=document.getElementById("g-fill");if(i)i.focus();},100);
+}
+function gramKey(e){if(e.key==="Enter"){if(!gAnswered)checkGramFill();else nextGram();}}
+function checkGram(chosen){
+  if(gAnswered)return; gAnswered=true;
+  const q=gQ[gIdx];
+  q.options.forEach((_,i)=>{const el=document.getElementById("gmc-"+i);if(i===q.correct)el.classList.add("show-correct");else if(i===chosen&&chosen!==q.correct)el.classList.add("wrong");el.disabled=true;});
+  const fb=document.getElementById("g-feedback"),ex=document.getElementById("g-explanation"),btn=document.getElementById("g-btn");
+  if(chosen===q.correct){gScore++;fb.className="grammar-feedback correct";fb.textContent="✅ ¡Correcto!";}
+  else{gWrong.push(q);fb.className="grammar-feedback wrong";fb.textContent="❌ Risposta sbagliata!";}
+  if(q.explanation)ex.textContent="💡 "+q.explanation;
+  btn.textContent=gIdx<gQ.length-1?"Siguiente →":"Resultados 🏆";btn.onclick=nextGram;
+}
+function checkGramFill(){
+  if(gAnswered)return; gAnswered=true;
+  const q=gQ[gIdx],inp=document.getElementById("g-fill");
+  const val=inp.value.trim().toLowerCase(),correct=q.blank.toLowerCase();
+  const ok=correct.split("/").map(x=>x.trim()).includes(val);
+  const fb=document.getElementById("g-feedback"),ex=document.getElementById("g-explanation"),btn=document.getElementById("g-btn");
+  if(ok){gScore++;inp.classList.add("correct");fb.className="grammar-feedback correct";fb.textContent="✅ ¡Correcto!";}
+  else{gWrong.push(q);inp.classList.add("wrong");fb.className="grammar-feedback wrong";fb.innerHTML="❌ Risposta: <b>"+q.blank+"</b>";}
+  if(q.explanation)ex.textContent="💡 "+q.explanation;
+  btn.textContent=gIdx<gQ.length-1?"Siguiente →":"Resultados 🏆";btn.onclick=nextGram;
+}
+function nextGram(){gIdx++;if(gIdx>=gQ.length)showGramResults();else showGramQ();}
+function showGramResults(){
+  const total=gQ.length,pct=Math.round(gScore/total*100);
+  const emoji=pct===100?"🏆":pct>=70?"🌟":pct>=40?"💪":"📚";
+  let wHTML="";
+  if(gWrong.length>0){wHTML="<div class='quiz-wrong-list'><b style='font-size:13px;color:#6b7280;'>Da ripassare:</b>";gWrong.forEach(q=>{wHTML+=`<div class="quiz-wrong-item"><span style="color:var(--sub)">${q.topic}</span></div>`;});wHTML+="</div>";}
+  document.getElementById("grammar-counter").textContent="";
+  document.getElementById("grammar-body").innerHTML=`<div class="quiz-score-card"><div style="font-size:48px">${emoji}</div><div class="quiz-score-big">${gScore}/${total}</div><div class="quiz-score-label">${pct>=70?"¡Muy bien!":"¡Sigue practicando!"} (${pct}%)</div>${wHTML}</div><button class="quiz-btn" onclick="startGrammarQuiz()">🔄 Reiniciar</button><button class="quiz-btn sec" onclick="showScreen('screen-topics')" style="margin-top:8px;">← Temas</button>`;
+  savePracticeDay();
+}
+
+// ── READING COMPREHENSION ──
+const READINGS=[
+  {title:"Un día en el mercado",text:`El sábado por la mañana, mi madre y yo fuimos al mercado del barrio. Había muchos puestos con frutas, verduras y flores. Compramos tomates, manzanas y un poco de queso. El señor del puesto de frutas era muy simpático y nos dio una naranja gratis. También vi a mi amiga Sofía con su abuela. Tomamos un zumo de naranja en un café pequeño y charlamos un rato. Hacía mucho sol y la gente estaba muy contenta. Me gusta mucho ir al mercado porque es más divertido que ir al supermercado.`,
+   questions:[
+     {q:"¿Cuándo fueron al mercado?",options:["El viernes por la tarde","El sábado por la mañana","El domingo al mediodía","El lunes"],correct:1},
+     {q:"¿Qué les dio el señor del puesto gratis?",options:["Un tomate","Una manzana","Un poco de queso","Una naranja"],correct:3},
+     {q:"¿A quién vio la narradora en el mercado?",options:["A su profesora","A su amiga Sofía","A su primo","A su vecina"],correct:1},
+     {q:"¿Por qué le gusta el mercado?",options:["Es más barato","Es más cerca","Es más divertido","Es más grande"],correct:2},
+   ]},
+  {title:"Mi rutina diaria",text:`Me llamo Carlos y tengo catorce años. Vivo en Madrid con mis padres y mi hermana pequeña, Ana. Mi rutina de cada día es siempre igual. Me levanto a las siete de la mañana y desayuno cereales con leche. Luego voy al colegio en metro. Las clases empiezan a las ocho y media y terminan a las tres. Por la tarde, hago los deberes y, si tengo tiempo, juego al baloncesto con mis amigos en el parque. Me gusta mucho el baloncesto porque soy bastante alto. Por la noche, ceno con mi familia y veo la televisión un poco antes de dormir.`,
+   questions:[
+     {q:"¿Cuántos años tiene Carlos?",options:["12","13","14","15"],correct:2},
+     {q:"¿Cómo va Carlos al colegio?",options:["En autobús","En coche","En metro","A pie"],correct:2},
+     {q:"¿A qué hora terminan las clases?",options:["A las dos","A las tres","A las cuatro","A las dos y media"],correct:1},
+     {q:"¿Por qué le gusta el baloncesto a Carlos?",options:["Es fácil","Sus amigos juegan","Es bastante alto","Su padre juega"],correct:2},
+   ]},
+  {title:"Las vacaciones de verano",text:`El verano pasado, mi familia y yo fuimos de vacaciones a la costa. Estuvimos en un hotel pequeño cerca de la playa durante una semana. Cada mañana, mis padres tomaban el sol mientras mi hermano y yo nadábamos en el mar. El agua estaba un poco fría pero nos divertimos mucho. Un día, hicimos una excursión en barco y vimos delfines. Fue increíble. También probé el pulpo por primera vez — ¡estaba delicioso! Al final de las vacaciones, no quería volver a casa. Espero volver el año que viene.`,
+   questions:[
+     {q:"¿Dónde pasó las vacaciones la familia?",options:["En las montañas","En el campo","En la ciudad","En la costa"],correct:3},
+     {q:"¿Cuánto tiempo estuvieron de vacaciones?",options:["Tres días","Una semana","Dos semanas","Un mes"],correct:1},
+     {q:"¿Qué vieron durante la excursión en barco?",options:["Tiburones","Ballenas","Delfines","Tortugas"],correct:2},
+     {q:"¿Qué probó la narradora por primera vez?",options:["El pulpo","La paella","El gazpacho","Las gambas"],correct:0},
+   ]},
+  {title:"Mi mejor amiga",text:`Mi mejor amiga se llama Laura. Tiene trece años, igual que yo. Vive en mi calle, a cinco minutos de mi casa. Nos conocimos en el colegio cuando teníamos seis años. Laura es muy simpática y divertida. Le gusta mucho la música — toca la guitarra y canta muy bien. También le gustan los animales. Tiene dos gatos y un conejo. Los fines de semana, Laura y yo vamos al parque, vemos películas o estudiamos juntas. Mi asignatura favorita es matemáticas, pero la de Laura es inglés. Somos muy diferentes, ¡pero somos las mejores amigas del mundo!`,
+   questions:[
+     {q:"¿Cuántos años tiene Laura?",options:["12","13","14","15"],correct:1},
+     {q:"¿Dónde se conocieron?",options:["En el parque","En la piscina","En el colegio","En casa de una amiga"],correct:2},
+     {q:"¿Qué instrumento toca Laura?",options:["El piano","El violín","La flauta","La guitarra"],correct:3},
+     {q:"¿Cuál es la asignatura favorita de la narradora?",options:["Inglés","Ciencias","Matemáticas","Historia"],correct:2},
+   ]},
+];
+let rData=[],rIdx=0,rQIdx=0,rScore=0,rAnswered=false;
+function startReading(){rData=[...READINGS].sort(()=>Math.random()-0.5);rIdx=0;rScore=0;showReadingText();}
+function showReadingText(){
+  rQIdx=0;rAnswered=false;
+  const r=rData[rIdx],total=rData.length;
+  document.getElementById("reading-counter").textContent=(rIdx+1)+" / "+total;
+  document.getElementById("reading-body").innerHTML=`
+    <div class="reading-card">
+      <div class="reading-title">${r.title}</div>
+      <div class="reading-meta">Texto ${rIdx+1} de ${total} · ${r.questions.length} preguntas</div>
+      <div class="reading-text">${r.text}</div>
+    </div>
+    <button class="quiz-btn" onclick="showReadingQ()">Responder preguntas →</button>`;
+}
+function showReadingQ(){
+  rAnswered=false;
+  const r=rData[rIdx],q=r.questions[rQIdx],total=r.questions.length;
+  document.getElementById("reading-body").innerHTML=`
+    <div class="reading-card">
+      <div class="reading-title">${r.title}</div>
+      <div class="reading-meta">Pregunta ${rQIdx+1} de ${total}</div>
+      <div class="reading-question">${q.q}</div>
+      <div class="mc-options">${q.options.map((o,i)=>`<button class="mc-btn" id="rmc-${i}" onclick="checkReadingMC(${i})">${o}</button>`).join("")}</div>
+      <div class="grammar-feedback" id="r-feedback"></div>
+    </div>`;
+}
+function checkReadingMC(chosen){
+  if(rAnswered)return; rAnswered=true;
+  const q=rData[rIdx].questions[rQIdx];
+  q.options.forEach((_,i)=>{const el=document.getElementById("rmc-"+i);if(i===q.correct)el.classList.add("show-correct");else if(i===chosen&&chosen!==q.correct)el.classList.add("wrong");el.disabled=true;});
+  const fb=document.getElementById("r-feedback");
+  if(chosen===q.correct){rScore++;fb.className="grammar-feedback correct";fb.textContent="✅ ¡Correcto!";}
+  else{fb.className="grammar-feedback wrong";fb.textContent="❌ "+q.options[q.correct];}
+  const isLastQ=rQIdx>=rData[rIdx].questions.length-1;
+  const isLastT=rIdx>=rData.length-1;
+  const nextBtn=document.createElement("button");
+  nextBtn.className="quiz-btn";nextBtn.style.marginTop="12px";
+  nextBtn.textContent=isLastQ?(isLastT?"Resultados 🏆":"Siguiente texto →"):"Siguiente pregunta →";
+  nextBtn.onclick=()=>{if(isLastQ){if(isLastT)showReadingResults();else{rIdx++;showReadingText();}}else{rQIdx++;rAnswered=false;showReadingQ();}};
+  document.getElementById("reading-body").appendChild(nextBtn);
+}
+function showReadingResults(){
+  const total=rData.reduce((s,r)=>s+r.questions.length,0),pct=Math.round(rScore/total*100);
+  const emoji=pct===100?"🏆":pct>=70?"🌟":pct>=40?"💪":"📚";
+  document.getElementById("reading-counter").textContent="";
+  document.getElementById("reading-body").innerHTML=`<div class="quiz-score-card"><div style="font-size:48px">${emoji}</div><div class="quiz-score-big">${rScore}/${total}</div><div class="quiz-score-label">${pct>=70?"¡Excelente comprensión!":"¡Sigue leyendo!"} (${pct}%)</div></div><button class="quiz-btn" onclick="startReading()">🔄 Reiniciar</button><button class="quiz-btn sec" onclick="showScreen('screen-topics')" style="margin-top:8px;">← Temas</button>`;
+  savePracticeDay();
+}
+</script>
 </body>
 </html>
