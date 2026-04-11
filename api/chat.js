@@ -1,15 +1,18 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Solo POST' });
+  // 1. Controllo che la richiesta sia corretta
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Metodo non consentito' });
+  }
 
-  // Cerca la chiave con tutti i nomi possibili per sicurezza
-  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
+  // 2. Recupero la chiave che abbiamo visto nella tua foto
+  const apiKey = process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
-    return res.status(200).json({ reply: "ERRORE: Chiave API non trovata su Vercel. Controlla Environment Variables." });
+    return res.status(200).json({ reply: "Errore: Vercel non passa la chiave. Prova a rifare il Redeploy." });
   }
 
   try {
-    // Usiamo il fetch nativo di Node.js (senza librerie esterne)
+    // 3. Chiamata diretta ad Anthropic (senza librerie esterne)
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -33,9 +36,10 @@ export default async function handler(req, res) {
       return res.status(200).json({ reply: "Nota di Anthropic: " + data.error.message });
     }
 
+    // 4. Invio la risposta a Zoe
     return res.status(200).json({ reply: data.content[0].text });
+
   } catch (error) {
-    // Questo cattura l'errore della foto ed evita il crash 500
-    return res.status(200).json({ reply: "Errore tecnico di rete: " + error.message });
+    return res.status(200).json({ reply: "Errore tecnico di rete. Riprova tra 10 secondi." });
   }
 }
